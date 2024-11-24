@@ -13,7 +13,7 @@ local get_sections = function(active)
   return sections
 end
 
-require("lualine").setup {
+require("lualine").setup({
   options = {
     icons_enabled = true,
     theme = "material",
@@ -56,4 +56,4 @@ require("lualine").setup {
   winbar = {},
   inactive_winbar = {},
   extensions = {},
-}
+})

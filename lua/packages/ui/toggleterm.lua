@@ -1,9 +1,9 @@
-local toggleterm = require "toggleterm"
+local toggleterm = require("toggleterm")
 local Terminal = require("toggleterm.terminal").Terminal
 
-local config = require "core.config"
+local config = require("core.config")
 
-toggleterm.setup {
+toggleterm.setup({
   hide_numbers = false,
   start_in_insert = false,
   close_on_exit = true,
@@ -16,21 +16,21 @@ toggleterm.setup {
       background = "Normal",
     },
   },
-}
+})
 
 local terminals = {
   shell = {
     map = "<Leader>tf",
-    terminal = Terminal:new {
+    terminal = Terminal:new({
       cmd = vim.o.shell,
       direction = "float",
-    },
+    }),
   },
   btm = {
-    terminal = Terminal:new {
+    terminal = Terminal:new({
       cmd = "btm",
       direction = "float",
-    },
+    }),
   },
 }
 
@@ -49,4 +49,4 @@ function _G.toggleterm_init_buf()
   vim.api.nvim_buf_set_keymap(0, "t", "<C-j><C-j>", [[<C-\><C-n>]], opts)
 end
 
-vim.cmd "autocmd! TermOpen term://*toggleterm#* lua toggleterm_init_buf()"
+vim.cmd("autocmd! TermOpen term://*toggleterm#* lua toggleterm_init_buf()")

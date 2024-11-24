@@ -1,11 +1,11 @@
-local packer = require "lib.packer"
+local packer = require("lib.packer")
 
-packer.register {
+packer.register({
   -- Statusline
   plugins = {
     {
       "nvim-lualine/lualine.nvim",
-      config = function() require "packages.ui.lualine" end,
+      config = function() require("packages.ui.lualine") end,
       requires = {
         { "nvim-tree/nvim-web-devicons" },
       },
@@ -14,7 +14,7 @@ packer.register {
     -- Visualize git diffs and blame
     {
       "lewis6991/gitsigns.nvim",
-      config = function() require "packages.ui.gitsigns" end,
+      config = function() require("packages.ui.gitsigns") end,
     },
 
     -- Fuzzy finder
@@ -38,15 +38,15 @@ packer.register {
     {
       "akinsho/toggleterm.nvim",
       keys = { { "n", "<Leader>t" } },
-      config = function() require "packages.ui.toggleterm" end,
+      config = function() require("packages.ui.toggleterm") end,
     },
 
     -- Notification
     {
       "rcarriga/nvim-notify",
       config = function()
-        vim.notify = require "notify"
-        vim.notify.setup {
+        vim.notify = require("notify")
+        vim.notify.setup({
           fps = 30,
           icons = {
             DEBUG = "",
@@ -56,7 +56,7 @@ packer.register {
             WARN = "🔥",
           },
           timeout = 3000,
-        }
+        })
       end,
     },
 
@@ -79,4 +79,4 @@ packer.register {
       end,
     },
   },
-}
+})

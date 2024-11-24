@@ -1,9 +1,9 @@
 local on_filetype = require("lib.helper").on_filetype
 
 on_filetype("defx", function()
-  local keymap = require "lib.keymap"
+  local keymap = require("lib.keymap")
   local opts = { keymap.flags.silent, keymap.flags.noremap, keymap.flags.expr }
-  keymap.bnmap {
+  keymap.bnmap({
     { "<CR>", "defx#do_action('open')", opts },
     { "l", "defx#do_action('open')", opts },
     { "c", "defx#do_action('copy')", opts },
@@ -24,5 +24,5 @@ on_filetype("defx", function()
     { "k", "line('.') == 1 ? 'G' : 'k'", opts },
     { "R", "defx#do_action('redraw')", opts },
     { "<C-g>", "defx#do_action('print')", opts },
-  }
+  })
 end)

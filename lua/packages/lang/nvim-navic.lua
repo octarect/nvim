@@ -1,4 +1,4 @@
-require("nvim-navic").setup {
+require("nvim-navic").setup({
   icons = {
     File = " ",
     Module = " ",
@@ -32,4 +32,4 @@ require("nvim-navic").setup {
   depth_limit = 0,
   depth_limit_indicator = "..",
   safe_output = true,
-}
+})

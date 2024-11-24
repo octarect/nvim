@@ -1,8 +1,8 @@
-local config = require "core.config"
-local keymap = require "lib.keymap"
-local gitsigns = require "gitsigns"
+local config = require("core.config")
+local keymap = require("lib.keymap")
+local gitsigns = require("gitsigns")
 
-gitsigns.setup {
+gitsigns.setup({
   signs = {
     add = { text = "█" },
     change = { text = "█" },
@@ -40,9 +40,9 @@ gitsigns.setup {
     row = 0,
     col = 1,
   },
-}
+})
 
-keymap.nmap {
+keymap.nmap({
   { "[c", gitsigns.prev_hunk, { keymap.flags.silent } },
   { "]c", gitsigns.next_hunk, { keymap.flags.silent } },
-}
+})

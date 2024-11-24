@@ -1,5 +1,5 @@
-local config = require "core.config"
-local KVStore = require "lib.kvstore"
+local config = require("core.config")
+local KVStore = require("lib.kvstore")
 
 -- Use KVStore for persistence of settings
 local kvs = KVStore.new(config.cache_path .. "/kv2", "colorscheme")
@@ -25,7 +25,7 @@ local patch_colorscheme = function()
   hl("SignColumn", { fg = "#ebdbb2", ctermfg = 187 })
 
   -- Remove background color of blank area (EndOfBuffer) under EOF
-  if vim.fn.has "nvim" == 1 or vim.fn.has "patch-7.4.237" then
+  if vim.fn.has("nvim") == 1 or vim.fn.has("patch-7.4.237") then
     hl("EndOfBuffer", {})
   end
 
@@ -44,7 +44,7 @@ local patch_colorscheme = function()
   link("LspReferenceWrite", "Search")
 
   -- Treesitter support
-  if not defined "@text.diff.add" then
+  if not defined("@text.diff.add") then
     link("@text.diff.add", "DiffAdd")
     link("@text.diff.delete", "DiffDelete")
     link("@attribute", "DiffChange")
@@ -55,7 +55,7 @@ local patch_colorscheme = function()
 end
 
 -- Enable 24-bit RGB color
-if vim.fn.has "nvim" == 1 then
+if vim.fn.has("nvim") == 1 then
   vim.opt.termguicolors = true
 end
 
@@ -73,7 +73,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   callback = function(opts)
     -- Cache colorscheme to restore it on launching neovim next time
     local colorscheme = opts.match
-    if vim.fn.has "vim_starting" ~= 1 then
+    if vim.fn.has("vim_starting") ~= 1 then
       kvs:write("current", colorscheme)
     end
 
@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 })
 
 -- Initialize colorscheme
-local colorscheme = kvs:read "current" or "desert"
+local colorscheme = kvs:read("current") or "desert"
 
 vim.opt.background = "dark"
 vim.api.nvim_command("colorscheme " .. colorscheme)

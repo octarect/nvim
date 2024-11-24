@@ -20,7 +20,7 @@ KVStore.prototype.read = function(self, key)
   if not f then
     return nil
   end
-  local value = f:read "a"
+  local value = f:read("a")
   f:close()
   return value
 end

@@ -1,9 +1,9 @@
-local config = require "core.config"
+local config = require("core.config")
 
 local uv = vim.loop
 local packer = nil
 
-local data_path = vim.fn.stdpath "data" .. "/site"
+local data_path = vim.fn.stdpath("data") .. "/site"
 local packer_path = data_path .. "/pack/packer/opt/packer.nvim"
 local packer_compiled_path = data_path .. "/plugin/packer_compiled.lua"
 local packer_deps_path = data_path .. "/lua/packer_deps.lua"
@@ -123,11 +123,11 @@ local init = function()
   end
 
   if not packer then
-    vim.api.nvim_command "packadd packer.nvim"
-    packer = require "packer"
+    vim.api.nvim_command("packadd packer.nvim")
+    packer = require("packer")
   end
 
-  packer.init {
+  packer.init({
     compile_path = packer_compiled_path,
     disable_commands = true,
     display = {
@@ -137,9 +137,9 @@ local init = function()
         return result, win, buf
       end,
     },
-  }
+  })
   packer.reset()
-  packer.use { "wbthomason/packer.nvim", opt = true }
+  packer.use({ "wbthomason/packer.nvim", opt = true })
 
   -- Reload plugin definitions
   Dependencies.clear()
