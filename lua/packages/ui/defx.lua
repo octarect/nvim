@@ -1,4 +1,4 @@
-local on_filetype = require("lib.helper").on_filetype
+local on_filetype = require("lib.event").on_filetype
 
 on_filetype("defx", function()
   local keymap = require("lib.keymap")
