@@ -13,7 +13,7 @@ local get_sections = function(active)
   return sections
 end
 
-require("lualine").setup {
+require("lualine").setup({
   options = {
     icons_enabled = true,
     theme = "material",
@@ -42,8 +42,12 @@ require("lualine").setup {
     lualine_b = {
       -- The following component will be enabled after loading nvim-navic
       {
-        function() return require("nvim-navic").get_location() end,
-        cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+        function()
+          return require("nvim-navic").get_location()
+        end,
+        cond = function()
+          return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+        end,
       },
     },
     lualine_c = {},
@@ -56,4 +60,4 @@ require("lualine").setup {
   winbar = {},
   inactive_winbar = {},
   extensions = {},
-}
+})

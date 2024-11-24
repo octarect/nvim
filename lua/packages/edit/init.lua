@@ -1,12 +1,14 @@
-local packer = require "lib.packer"
+local packer = require("lib.packer")
 
-packer.register {
+packer.register({
   plugins = {
     -- Completion
     {
       "hrsh7th/nvim-cmp",
       event = { "InsertEnter" },
-      config = function() require "packages.edit.nvim-cmp" end,
+      config = function()
+        require("packages.edit.nvim-cmp")
+      end,
       requires = {
         { "hrsh7th/cmp-nvim-lsp" },
         { "tzachar/cmp-tabnine", run = "./install.sh" },
@@ -33,29 +35,31 @@ packer.register {
         vim.g.NERDSpaceDelims = 1
         vim.g.NERDDefaultAlign = "left"
         vim.g.NERDCompactSexyComs = 1
-        local keymap = require "lib.keymap"
-        keymap.nmap {
+        local keymap = require("lib.keymap")
+        keymap.nmap({
           { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
-        }
-        keymap.vmap {
+        })
+        keymap.vmap({
           { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
-        }
+        })
       end,
     },
     {
       "junegunn/vim-easy-align",
       cmd = "EasyAlign",
       setup = function()
-        local keymap = require "lib.keymap"
-        keymap.vmap {
+        local keymap = require("lib.keymap")
+        keymap.vmap({
           { "<CR>", ":EasyAlign<CR>", { keymap.flags.silent, keymap.flags.noremap } },
-        }
+        })
       end,
     },
     {
       "windwp/nvim-autopairs",
       event = { "InsertEnter" },
-      config = function() require("nvim-autopairs").setup {} end,
+      config = function()
+        require("nvim-autopairs").setup({})
+      end,
     },
 
     -- Editorconfig support
@@ -64,4 +68,4 @@ packer.register {
       event = { "BufNewFile", "BufRead" },
     },
   },
-}
+})

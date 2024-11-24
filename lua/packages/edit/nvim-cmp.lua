@@ -1,26 +1,26 @@
-local cmp = require "cmp"
-local types = require "cmp.types"
-local lspkind = require "lspkind"
-local tabnine = require "cmp_tabnine.config"
+local cmp = require("cmp")
+local types = require("cmp.types")
+local lspkind = require("lspkind")
+local tabnine = require("cmp_tabnine.config")
 
-local config = require "core.config"
+local config = require("core.config")
 
 local check_back_space = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s" ~= nil
+  local col = vim.fn.col(".") - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
 end
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-tabnine:setup {
+tabnine:setup({
   max_lines = 1000,
   max_num_results = 20,
   sort = true,
   priority = 5000,
-}
+})
 
 local source_menus = {
   nvim_lsp = "[LSP]",
@@ -32,14 +32,14 @@ local source_menus = {
   treesitter = "[TS]",
 }
 
-cmp.setup {
+cmp.setup({
   completion = {
     autocomplete = {
       types.cmp.TriggerEvent.InsertEnter,
       types.cmp.TriggerEvent.TextChanged,
     },
   },
-  sources = cmp.config.sources {
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "treesitter" },
@@ -47,9 +47,11 @@ cmp.setup {
     { name = "buffer" },
     { name = "path" },
     { name = "cmp_tabnine" },
-  },
+  }),
   snippet = {
-    expand = function(args) require("luasnip").lsp_expand(args.body) end,
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
   },
   window = {
     documentation = {
@@ -59,7 +61,7 @@ cmp.setup {
       border = config.window.border,
     },
   },
-  mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert({
     ["<C-n>"] = function()
       if cmp.visible() then
         cmp.mapping.select_next_item()()
@@ -83,11 +85,11 @@ cmp.setup {
         cmp.mapping.complete()()
       end
     end,
-    ["<CR>"] = cmp.mapping.confirm {
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
-  },
+    }),
+  }),
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = lspkind.symbolic(vim_item.kind)
@@ -107,7 +109,7 @@ cmp.setup {
       return vim_item
     end,
   },
-}
+})
 
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline(),

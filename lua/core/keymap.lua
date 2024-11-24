@@ -1,11 +1,11 @@
-local keymap = require "lib.keymap"
+local keymap = require("lib.keymap")
 local nmap, vmap = keymap.nmap, keymap.vmap
 local silent, noremap = keymap.flags.silent, keymap.flags.noremap
 local flags = { silent, noremap }
 
 local opt = vim.opt
 
-nmap {
+nmap({
   { "[b", "<Cmd>bprevious<CR>", flags },
   { "]b", "<Cmd>bnext<CR>", flags },
   {
@@ -40,11 +40,11 @@ nmap {
     end)(),
     flags,
   },
-}
+})
 
-vmap {
+vmap({
   { "<LocalLeader>r", "<Cmd>'<,'>w !bash<CR>", { noremap } },
-}
+})
 
 -- Tab
 local max_tab = 9
@@ -64,7 +64,7 @@ end
 nmap(tab_keymaps)
 
 -- Folding
-nmap {
+nmap({
   -- Open/Close fold recursively
-  { "za", "zA", { noremap, silent }},
-}
+  { "za", "zA", { noremap, silent } },
+})

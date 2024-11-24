@@ -1,9 +1,9 @@
-local config = require "core.config"
+local config = require("core.config")
 
 local uv = vim.loop
 local packer = nil
 
-local data_path = vim.fn.stdpath "data" .. "/site"
+local data_path = vim.fn.stdpath("data") .. "/site"
 local packer_path = data_path .. "/pack/packer/opt/packer.nvim"
 local packer_compiled_path = data_path .. "/plugin/packer_compiled.lua"
 local packer_deps_path = data_path .. "/lua/packer_deps.lua"
@@ -14,7 +14,9 @@ local Dependencies = (function()
 
   Dependencies.data = {}
 
-  local get_plugin_name = function(plugin) return string.match(plugin[1], "/(.+)$") end
+  local get_plugin_name = function(plugin)
+    return string.match(plugin[1], "/(.+)$")
+  end
 
   Dependencies.push = function(plugin)
     local name = get_plugin_name(plugin)
@@ -28,7 +30,9 @@ local Dependencies = (function()
     end
   end
 
-  Dependencies.clear = function() Dependencies.plugins = {} end
+  Dependencies.clear = function()
+    Dependencies.plugins = {}
+  end
 
   Dependencies.save = function(path)
     local script = string.format("return vim.fn.json_decode('%s')", vim.fn.json_encode(Dependencies.data))
@@ -123,11 +127,11 @@ local init = function()
   end
 
   if not packer then
-    vim.api.nvim_command "packadd packer.nvim"
-    packer = require "packer"
+    vim.api.nvim_command("packadd packer.nvim")
+    packer = require("packer")
   end
 
-  packer.init {
+  packer.init({
     compile_path = packer_compiled_path,
     disable_commands = true,
     display = {
@@ -137,9 +141,9 @@ local init = function()
         return result, win, buf
       end,
     },
-  }
+  })
   packer.reset()
-  packer.use { "wbthomason/packer.nvim", opt = true }
+  packer.use({ "wbthomason/packer.nvim", opt = true })
 
   -- Reload plugin definitions
   Dependencies.clear()
@@ -188,7 +192,9 @@ local cmds = {
   "Status",
 }
 for _, cmd in ipairs(cmds) do
-  vim.api.nvim_create_user_command("Packer" .. cmd, function() require("lib.packer")[string.lower(cmd)]() end, {})
+  vim.api.nvim_create_user_command("Packer" .. cmd, function()
+    require("lib.packer")[string.lower(cmd)]()
+  end, {})
 end
 
 return M

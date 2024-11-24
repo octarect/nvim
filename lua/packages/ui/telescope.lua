@@ -18,7 +18,7 @@ local function get_picker_cmd(picker_name, opts)
   mapfuncs[i] = function()
     -- NOTE: require the root module before loading its children (and trigger on_lua)
     if not package.loaded["telescope"] then
-      require "telescope"
+      require("telescope")
     end
 
     local picker
@@ -41,15 +41,15 @@ local function get_picker_cmd(picker_name, opts)
 end
 
 local function set_keymaps()
-  local keymap = require "lib.keymap"
+  local keymap = require("lib.keymap")
   local opts = { keymap.flags.silent, keymap.flags.noremap }
-  keymap.nmap {
-    { "<Leader>df", get_picker_cmd "builtin/git_files", opts },
-    { "<Leader>dF", get_picker_cmd "builtin/find_files", opts },
-    { "<Leader>dg", get_picker_cmd "builtin/live_grep", opts },
-    { "<Leader>db", get_picker_cmd "builtin/buffers", opts },
+  keymap.nmap({
+    { "<Leader>df", get_picker_cmd("builtin/git_files"), opts },
+    { "<Leader>dF", get_picker_cmd("builtin/find_files"), opts },
+    { "<Leader>dg", get_picker_cmd("builtin/live_grep"), opts },
+    { "<Leader>db", get_picker_cmd("builtin/buffers"), opts },
     { "<Leader>dc", get_picker_cmd("builtin/colorscheme", { theme = "dropdown" }), opts },
-    { "<Leader>ds", get_picker_cmd "builtin/treesitter", opts },
+    { "<Leader>ds", get_picker_cmd("builtin/treesitter"), opts },
     -- telescope-symbols.nvim
     { "<Leader>de", get_picker_cmd("builtin/symbols", { theme = "cursor" }), opts },
     -- telescope-menu.nvim
@@ -59,17 +59,19 @@ local function set_keymaps()
     -- telescope-file-browser.nvim
     {
       "<Leader>f",
-      function() require("telescope").extensions.file_browser.file_browser { path = last_opened_path } end,
+      function()
+        require("telescope").extensions.file_browser.file_browser({ path = last_opened_path })
+      end,
       opts,
     },
-  }
+  })
 end
 
 local function init()
-  local actions = require "telescope.actions"
-  local config = require "core.config"
+  local actions = require("telescope.actions")
+  local config = require("core.config")
 
-  require("telescope").setup {
+  require("telescope").setup({
     defaults = {
       mappings = {
         i = {
@@ -140,7 +142,12 @@ local function init()
             { "😀Insert emoji (Nerd Fonts)", [[ lua require"telescope.builtin".symbols{ sources = {"nerd"} } ]] },
             { "😀Insert emoji (kaomoji)", [[ lua require"telescope.builtin".symbols{ sources = {"kaomoji"} } ]] },
             { "🔭Open filetype menu", "Telescope filetype" },
-            { "🔭Notification History", function() require("telescope").extensions.notify.notify() end },
+            {
+              "🔭Notification History",
+              function()
+                require("telescope").extensions.notify.notify()
+              end,
+            },
           },
         },
         cursor = {
@@ -151,8 +158,18 @@ local function init()
             { "😀Insert emoji", [[ lua require"telescope.builtin".symbols{ sources = {"emoji", "gitmoji"} } ]] },
             { "😀Insert emoji (Nerd Fonts)", [[ lua require"telescope.builtin".symbols{ sources = {"nerd"} } ]] },
             { "😀Insert emoji (kaomoji)", [[ lua require"telescope.builtin".symbols{ sources = {"kaomoji"} } ]] },
-            { " Git: Blame line", function() require("gitsigns").blame_line { full = true } end },
-            { " Git: Preview hunk", function() require("gitsigns").preview_hunk() end },
+            {
+              " Git: Blame line",
+              function()
+                require("gitsigns").blame_line({ full = true })
+              end,
+            },
+            {
+              " Git: Preview hunk",
+              function()
+                require("gitsigns").preview_hunk()
+              end,
+            },
           },
         },
         filetype = {
@@ -179,7 +196,7 @@ local function init()
           return function(bufnr, bypass)
             fb_action(bufnr, bypass)
 
-            local action_state = require "telescope.actions.state"
+            local action_state = require("telescope.actions.state")
             local current_picker = action_state.get_current_picker(bufnr)
             local finder = current_picker.finder
             last_opened_path = finder.path
@@ -202,11 +219,11 @@ local function init()
         }
       end)(),
     },
-  }
-  require("telescope").load_extension "fzf"
-  require("telescope").load_extension "menu"
-  require("telescope").load_extension "file_browser"
-  require("telescope").load_extension "notify"
+  })
+  require("telescope").load_extension("fzf")
+  require("telescope").load_extension("menu")
+  require("telescope").load_extension("file_browser")
+  require("telescope").load_extension("notify")
 end
 
 return {

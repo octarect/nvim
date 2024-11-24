@@ -1,6 +1,6 @@
-local packer = require "lib.packer"
+local packer = require("lib.packer")
 
-packer.register {
+packer.register({
   plugins = {
     {
       "itchyny/vim-parenmatch",
@@ -18,28 +18,30 @@ packer.register {
       "rainbowhxch/accelerated-jk.nvim",
       module = "accelerated-jk",
       setup = function()
-        local keymap = require "lib.keymap"
+        local keymap = require("lib.keymap")
         local accelerated_move = function(movement)
-          return function() require("accelerated-jk").move_to(movement) end
+          return function()
+            require("accelerated-jk").move_to(movement)
+          end
         end
-        keymap.nmap {
-          { "j", accelerated_move "j", { keymap.flags.silent } },
-          { "k", accelerated_move "k", { keymap.flags.silent } },
-        }
+        keymap.nmap({
+          { "j", accelerated_move("j"), { keymap.flags.silent } },
+          { "k", accelerated_move("k"), { keymap.flags.silent } },
+        })
       end,
     },
     {
       "norcalli/nvim-colorizer.lua",
       ft = { "css", "sass", "html", "javascript", "lua" },
       config = function()
-        require("colorizer").setup {
+        require("colorizer").setup({
           "css",
           "sass",
           "html",
           "javascript",
           "lua",
-        }
+        })
       end,
     },
   },
-}
+})

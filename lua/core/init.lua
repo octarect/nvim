@@ -26,15 +26,15 @@ vim.g.loaded_logiPat = 1
 vim.g.loaded_matchit = 1
 vim.g.loaded_matchparen = 1
 
-vim.api.nvim_command "filetype plugin indent on"
-if vim.fn.has "vim_starting" == 1 then
-  vim.api.nvim_command "syntax enable"
+vim.api.nvim_command("filetype plugin indent on")
+if vim.fn.has("vim_starting") == 1 then
+  vim.api.nvim_command("syntax enable")
 end
 
-require "core.options"
-require "core.filetypes"
-require "core.hack"
-require "core.colorscheme"
-require "core.keymap"
+require("core.options")
+require("core.filetypes")
+require("core.hack")
+require("core.colorscheme")
+require("core.keymap")
 
-require "lib.packer"
+require("lib.packer")

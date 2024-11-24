@@ -1,7 +1,9 @@
 KVStore = {}
 
 KVStore.prototype = {}
-KVStore.prototype.get_key_file_path = function(self, key) return self.cache_path .. "/" .. key end
+KVStore.prototype.get_key_file_path = function(self, key)
+  return self.cache_path .. "/" .. key
+end
 
 KVStore.prototype.write = function(self, key, value)
   local key_file_path = self:get_key_file_path(key)
@@ -20,7 +22,7 @@ KVStore.prototype.read = function(self, key)
   if not f then
     return nil
   end
-  local value = f:read "a"
+  local value = f:read("a")
   f:close()
   return value
 end

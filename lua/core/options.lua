@@ -1,7 +1,7 @@
 local opt = vim.opt
 local cache_path = require("core.config").cache_path
 
-if vim.fn.has "vim_starting" == 1 then
+if vim.fn.has("vim_starting") == 1 then
   opt.tabstop = 4
   opt.shiftwidth = 4
 end
@@ -56,13 +56,13 @@ opt.shortmess = "aTc"
 
 opt.wildmenu = true
 opt.wildmode = "full"
-opt.wildoptions:append "pum"
+opt.wildoptions:append("pum")
 
 opt.list = true
 opt.listchars = { tab = ">·", nbsp = "+", trail = "·", extends = "→", precedes = "←" }
 
 -- Disable tilde on blank area under EOF
-opt.fcs:append "eob: "
+opt.fcs:append("eob: ")
 
 -- Highlight embedded script (lua, python and ruby)
 vim.g.vimsyn_embed = "lPr"
@@ -71,7 +71,7 @@ vim.g.vimsyn_embed = "lPr"
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false
-opt.foldnestmax = 1
+opt.foldnestmax = 1;
 (function()
   -- Temporarily turn off foldmethod on insert mode
   local aug = vim.api.nvim_create_augroup("MyAutoCmdFold", {})
