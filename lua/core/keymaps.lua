@@ -17,8 +17,6 @@ nmap({
     end,
     { noremap },
   },
-  -- NOTE: What is this for ?
-  { "M", "m", { noremap } },
   -- Turn on `public mode` to make my great editor readable by co-workers.
   {
     "<Leader>os",

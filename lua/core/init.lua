@@ -35,6 +35,6 @@ require("core.options")
 require("core.filetypes")
 require("core.hack")
 require("core.colorscheme")
-require("core.keymap")
+require("core.keymaps")
 
 require("lib.packer")
