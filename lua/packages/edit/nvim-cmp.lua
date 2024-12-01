@@ -1,8 +1,6 @@
 local cmp = require("cmp")
 local types = require("cmp.types")
 local lspkind = require("lspkind")
-local tabnine = require("cmp_tabnine.config")
-
 local config = require("core.config")
 
 local check_back_space = function()
@@ -14,13 +12,6 @@ local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
-tabnine:setup({
-  max_lines = 1000,
-  max_num_results = 20,
-  sort = true,
-  priority = 5000,
-})
 
 local source_menus = {
   nvim_lsp = "[LSP]",
@@ -48,11 +39,6 @@ cmp.setup({
     { name = "path" },
     { name = "cmp_tabnine" },
   }),
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
   window = {
     documentation = {
       border = config.window.border,
@@ -93,19 +79,7 @@ cmp.setup({
   formatting = {
     format = function(entry, vim_item)
       vim_item.kind = lspkind.symbolic(vim_item.kind)
-      local menu = source_menus[entry.source.name]
-      if entry.source.name == "cmp_tabnine" then
-        _G.unk = entry.completion_item
-        if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-          menu = entry.completion_item.data.detail .. " " .. menu
-        end
-
-        vim_item.kind = ""
-        if entry.completion_item.kind ~= nil then
-          vim_item.kind = vim_item.kind .. entry.completion_item.kind
-        end
-      end
-      vim_item.menu = menu
+      vim_item.menu = source_menus[entry.source.name]
       return vim_item
     end,
   },

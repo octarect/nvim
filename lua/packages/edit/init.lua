@@ -1,71 +1,88 @@
-local packer = require("lib.packer")
+local pkg = require("lib.pkg")
 
-packer.register({
-  plugins = {
-    -- Completion
-    {
-      "hrsh7th/nvim-cmp",
-      event = { "InsertEnter" },
-      config = function()
-        require("packages.edit.nvim-cmp")
-      end,
-      requires = {
-        { "hrsh7th/cmp-nvim-lsp" },
-        { "tzachar/cmp-tabnine", run = "./install.sh" },
-        { "hrsh7th/cmp-buffer" },
-        { "hrsh7th/cmp-path" },
-        { "hrsh7th/cmp-cmdline" },
-        { "hrsh7th/cmp-emoji" },
-        { "ray-x/cmp-treesitter" },
-        {
-          "saadparwaiz1/cmp_luasnip",
-          requires = {
-            { "L3MON4D3/LuaSnip" },
-          },
-        },
-        { "onsails/lspkind-nvim" },
-      },
+pkg:add({}, {
+  {
+    "hrsh7th/nvim-cmp",
+    version = false,
+    event = { "InsertEnter" },
+    config = function()
+      require("packages.edit.nvim-cmp")
+    end,
+    dependencies = {
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-cmdline" },
+      { "hrsh7th/cmp-emoji" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-path" },
+      { "ray-x/cmp-treesitter" },
+      { "onsails/lspkind-nvim" },
     },
+  },
+  {
+    "scrooloose/nerdcommenter",
+    keys = { "<Plug>NERDCom" },
+    init = function()
+      vim.g.NERDSpaceDelims = 1
+      vim.g.NERDDefaultAlign = "left"
+      vim.g.NERDCompactSexyComs = 1
+      local keymap = require("lib.keymap")
+      keymap.nmap({
+        { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
+      })
+      keymap.vmap({
+        { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
+      })
+    end,
+  },
 
-    -- Edit
-    {
-      "scrooloose/nerdcommenter",
-      keys = "<Plug>NERDCom",
-      setup = function()
-        vim.g.NERDSpaceDelims = 1
-        vim.g.NERDDefaultAlign = "left"
-        vim.g.NERDCompactSexyComs = 1
-        local keymap = require("lib.keymap")
-        keymap.nmap({
-          { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
-        })
-        keymap.vmap({
-          { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
-        })
-      end,
-    },
-    {
-      "junegunn/vim-easy-align",
-      cmd = "EasyAlign",
-      setup = function()
-        local keymap = require("lib.keymap")
-        keymap.vmap({
-          { "<CR>", ":EasyAlign<CR>", { keymap.flags.silent, keymap.flags.noremap } },
-        })
-      end,
-    },
-    {
-      "windwp/nvim-autopairs",
-      event = { "InsertEnter" },
-      config = function()
-        require("nvim-autopairs").setup({})
-      end,
-    },
+  -- matchparen
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup()
+    end,
+  },
+  {
+    "utilyre/sentiment.nvim",
+    event = "VeryLazy",
+    version = "*",
+    opts = {},
+    init = function()
+      vim.g.loaded_matchparen = 1
+    end,
+  },
 
-    -- Editorconfig support
-    {
-      "editorconfig/editorconfig-vim",
-      event = { "BufNewFile", "BufRead" },
-    },
+  -- cursorword
+  {
+    "RRethy/vim-illuminate",
+    event = { "BufNewFile", "BufReadPre", "BufWritePre" },
+  },
+
+  {
+    "junegunn/vim-easy-align",
+    cmd = "EasyAlign",
+    init = function()
+      local keymap = require("lib.keymap")
+      keymap.vmap({
+        { "<CR>", ":EasyAlign<CR>", { keymap.flags.silent, keymap.flags.noremap } },
+      })
+    end,
+  },
+  {
+    "rainbowhxch/accelerated-jk.nvim",
+    module = "accelerated-jk",
+    init = function()
+      local keymap = require("lib.keymap")
+      local accelerated_move = function(movement)
+        return function()
+          require("accelerated-jk").move_to(movement)
+        end
+      end
+      keymap.nmap({
+        { "j", accelerated_move("j"), { keymap.flags.silent } },
+        { "k", accelerated_move("k"), { keymap.flags.silent } },
+      })
+    end,
   },
 })

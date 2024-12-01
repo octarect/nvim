@@ -1,5 +1,8 @@
 local lspconfig = require("lspconfig")
 
+-- Disable logging
+vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
+
 -- Leading keys to use LSP function
 local leader = "<LocalLeader>"
 
@@ -97,10 +100,24 @@ local lsp_settings = {
   gopls = {},
   html = {},
   jsonls = {},
-  solargraph = {},
+  lua_ls = {
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+        },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+          },
+        },
+      },
+    },
+  },
   terraformls = {},
   tflint = {},
-  tsserver = {
+  ts_ls = {
     root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
   },
   vimls = {},

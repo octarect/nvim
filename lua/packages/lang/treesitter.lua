@@ -1,24 +1,55 @@
-local ts_config = {
+require("nvim-treesitter.configs").setup({
   -- Install parsers automatically
-  ensure_installed = "all",
+  ensure_installed = {
+    "bash",
+    "c",
+    "c_sharp",
+    "clojure",
+    "cmake",
+    "commonlisp",
+    "cpp",
+    "css",
+    "csv",
+    "diff",
+    "dockerfile",
+    "elixir",
+    "erlang",
+    "gitcommit",
+    "gitignore",
+    "go",
+    "gomod",
+    "graphql",
+    "haskell",
+    "html",
+    "java",
+    "jq",
+    "json",
+    "lua",
+    "luadoc",
+    "make",
+    "nginx",
+    "perl",
+    "php",
+    "python",
+    "r",
+    "ruby",
+    "rust",
+    "scala",
+    "scss",
+    "sql",
+    "toml",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "xml",
+    "yaml",
+  },
+
   -- List of parsers to ignore installing (for "all")
-  ignore_install = {},
+  -- ignore_install = {},
 
   highlight = {
     enable = true,
     disable = {},
   },
-  -- p00f/nvim-ts-rainbow
-  rainbow = {
-    enable = true,
-  },
-}
-
-if jit.os == "OSX" then
-  -- Ignore haskell until C++11 related bug in macOS is fixed.
-  table.insert(ts_config.ignore_install, "haskell")
-  -- An error about Xcode occured on my environment
-  table.insert(ts_config.ignore_install, "phpdoc")
-end
-
-require("nvim-treesitter.configs").setup(ts_config)
+})
