@@ -17,6 +17,7 @@ function M:add(defaults, packages)
 end
 
 function M:load()
+  -- Download lazy.nvim if it doesn't exist.
   local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
   if not uv.fs_stat(lazy_path) then
     local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazy_repo_url, lazy_path })
@@ -32,6 +33,8 @@ function M:load()
   end
   vim.opt.runtimepath:prepend(lazy_path)
 
+  self:register_event_mapping("LazyFile", { "BufNewFile", "BufReadPre", "BufWritePre" })
+
   require("lazy").setup(self.packages, {
     lockfile = lazy_lockfile_path,
     rocks = {
@@ -46,6 +49,12 @@ function M:load()
       enabled = true,
     },
   })
+end
+
+function M:register_event_mapping(alias, mapped_events)
+  local event = require("lazy.core.handler.event")
+  event.mappings[alias] = { id = alias, event = mapped_events }
+  event["User " .. alias] = event.mappings[alias]
 end
 
 return M

@@ -3,7 +3,7 @@ local pkg = require("lib.pkg")
 pkg:add({}, {
   {
     "editorconfig/editorconfig-vim",
-    event = { "BufNewFile", "BufReadPre", "BufWritePre" },
+    event = { "LazyFile" },
   },
   {
     "norcalli/nvim-colorizer.lua",

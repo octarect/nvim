@@ -4,7 +4,7 @@ pkg:add({}, {
   -- LSP
   {
     "neovim/nvim-lspconfig",
-    event = { "BufNewFile", "BufReadPre", "BufWritePre" },
+    event = { "LazyFile" },
     config = function()
       require("packages.lang.lspconfig")
     end,
@@ -26,7 +26,7 @@ pkg:add({}, {
   -- Syntax
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufNewFile", "BufReadPre", "BufWritePre" },
+    event = { "LazyFile" },
     config = function()
       require("packages.lang.treesitter")
     end,

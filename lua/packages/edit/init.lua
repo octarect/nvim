@@ -56,7 +56,7 @@ pkg:add({}, {
   -- cursorword
   {
     "RRethy/vim-illuminate",
-    event = { "BufNewFile", "BufReadPre", "BufWritePre" },
+    event = { "LazyFile" },
   },
 
   {
