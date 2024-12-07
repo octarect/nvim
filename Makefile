@@ -1,6 +1,10 @@
-DOCKER_IMAGE := ghcr.io/octarect/nvim
+DOCKER_IMAGE    := ghcr.io/octarect/nvim
+XDG_CONFIG_HOME ?= $(HOME)/.config
 
 all:
+
+$(XDG_CONFIG_HOME)/nvim:
+	ln -s $(PWD) $(XDG_CONFIG_HOME)/nvim
 
 .PHONY: image
 image:
@@ -12,6 +16,13 @@ run: image
 		-v $(PWD):/root/.config/nvim:ro \
 		-w /root/.config/nvim \
 		$(DOCKER_IMAGE)
+
+.PHONY: install
+install: $(XDG_CONFIG_HOME)/nvim
+
+.PHONY: uninstall
+uninstall:
+	rm $(XDG_CONFIG_HOME)/nvim
 
 .PHONY: clean
 clean:
