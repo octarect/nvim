@@ -20,3 +20,7 @@ clean:
 .PHONY: fmt
 fmt:
 	stylua .
+
+.PHONY: lint
+lint:
+	luacheck .
