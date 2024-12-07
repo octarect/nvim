@@ -33,7 +33,7 @@ function M:load()
   end
   vim.opt.runtimepath:prepend(lazy_path)
 
-  self:register_event_mapping("LazyFile", { "BufNewFile", "BufReadPre", "BufWritePre" })
+  self.register_event_mapping("LazyFile", { "BufNewFile", "BufReadPre", "BufWritePre" })
 
   require("lazy").setup(self.packages, {
     lockfile = lazy_lockfile_path,
@@ -51,7 +51,7 @@ function M:load()
   })
 end
 
-function M:register_event_mapping(alias, mapped_events)
+function M.register_event_mapping(alias, mapped_events)
   local event = require("lazy.core.handler.event")
   event.mappings[alias] = { id = alias, event = mapped_events }
   event["User " .. alias] = event.mappings[alias]

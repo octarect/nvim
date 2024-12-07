@@ -1,4 +1,4 @@
-KVStore = {}
+local KVStore = {}
 
 KVStore.prototype = {}
 KVStore.prototype.get_key_file_path = function(self, key)
@@ -30,7 +30,7 @@ end
 KVStore.new = function(cache_path, namespace)
   local obj = KVStore.prototype
   obj.cache_path = cache_path .. "/" .. namespace
-  if not vim.fn.isdirectory(obj.cache_path) ~= 1 then
+  if vim.fn.isdirectory(obj.cache_path) == 1 then
     os.execute("mkdir -p " .. obj.cache_path)
   end
   return obj
