@@ -42,7 +42,7 @@ gitsigns.setup({
   },
 })
 
-keymap.nmap({
-  { "[c", gitsigns.prev_hunk, { keymap.flags.silent } },
-  { "]c", gitsigns.next_hunk, { keymap.flags.silent } },
+keymap.nmap():silent():set({
+  { "[c", gitsigns.prev_hunk, desc = "Jump to previous git hunk" },
+  { "]c", gitsigns.next_hunk, desc = "Jump to next git hunk" },
 })

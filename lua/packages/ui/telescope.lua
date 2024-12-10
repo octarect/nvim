@@ -42,27 +42,71 @@ end
 
 local function set_keymaps()
   local keymap = require("lib.keymap")
-  local opts = { keymap.flags.silent, keymap.flags.noremap }
-  keymap.nmap({
-    { "<Leader>df", get_picker_cmd("builtin/git_files"), opts },
-    { "<Leader>dF", get_picker_cmd("builtin/find_files"), opts },
-    { "<Leader>dg", get_picker_cmd("builtin/live_grep"), opts },
-    { "<Leader>db", get_picker_cmd("builtin/buffers"), opts },
-    { "<Leader>dc", get_picker_cmd("builtin/colorscheme", { theme = "dropdown" }), opts },
-    { "<Leader>ds", get_picker_cmd("builtin/treesitter"), opts },
+  keymap.nmap():silent():noremap():set({
+    {
+      "<Leader>df",
+      get_picker_cmd("builtin/git_files"),
+      desc = "List files (Git)",
+    },
+    {
+      "<Leader>dF",
+      get_picker_cmd("builtin/find_files"),
+      desc = "List files (All)",
+    },
+    {
+      "<Leader>dg",
+      get_picker_cmd("builtin/live_grep"),
+      desc = "Grep",
+    },
+    {
+      "<Leader>db",
+      get_picker_cmd("builtin/buffers"),
+      desc = "List buffers",
+    },
+    {
+      "<Leader>dc",
+      get_picker_cmd("builtin/colorscheme", { theme = "dropdown" }),
+      desc = "Change colorscheme",
+    },
+    {
+      "<Leader>ds",
+      get_picker_cmd("builtin/treesitter"),
+      desc = "List treesitter symbols",
+    },
+    {
+      "<Leader>dk",
+      get_picker_cmd("builtin/keymaps"),
+      desc = "List keymaps",
+    },
     -- telescope-symbols.nvim
-    { "<Leader>de", get_picker_cmd("builtin/symbols", { theme = "cursor" }), opts },
+    {
+      "<Leader>de",
+      get_picker_cmd("builtin/symbols", { theme = "cursor" }),
+      desc = "Insert emoji",
+    },
     -- telescope-menu.nvim
-    { "<Leader>dm", get_picker_cmd("menu/menu", { theme = "dropdown" }), opts },
-    { "<Leader>d.", get_picker_cmd("menu/filetype", { theme = "dropdown" }), opts },
-    { "<Leader>dd", get_picker_cmd("menu/cursor", { theme = "cursor" }), opts },
+    {
+      "<Leader>dm",
+      get_picker_cmd("menu/menu", { theme = "dropdown" }),
+      desc = "Open global menu",
+    },
+    {
+      "<Leader>d.",
+      get_picker_cmd("menu/filetype", { theme = "dropdown" }),
+      desc = "Open filetype-specific menu",
+    },
+    {
+      "<Leader>dd",
+      get_picker_cmd("menu/cursor", { theme = "cursor" }),
+      desc = "Open cursor menu",
+    },
     -- telescope-file-browser.nvim
     {
       "<Leader>f",
       function()
         require("telescope").extensions.file_browser.file_browser({ path = last_opened_path })
       end,
-      opts,
+      desc = "Browse files",
     },
   })
 end
@@ -181,7 +225,6 @@ local function init()
           markdown = {
             items = {
               { "✨Format table", "TableFormat" },
-              { "🔍Preview", "PrevimOpen" },
               { "🚩Increase headers", "HeaderIncrease" },
               { "🚩Decrease headers", "HeaderDecrease" },
               { "🚩Convert Setex headers to Atx", "SetexToAtx" },

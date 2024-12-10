@@ -1,13 +1,9 @@
 local keymap = require("lib.keymap")
-local nmap, vmap = keymap.nmap, keymap.vmap
-local silent, noremap = keymap.flags.silent, keymap.flags.noremap
-local flags = { silent, noremap }
-
 local opt = vim.opt
 
-nmap({
-  { "[b", "<Cmd>bprevious<CR>", flags },
-  { "]b", "<Cmd>bnext<CR>", flags },
+keymap.nmap():silent():noremap():set({
+  { "[b", "<Cmd>bprevious<CR>", desc = "Go to previous buffer" },
+  { "]b", "<Cmd>bnext<CR>", desc = "Go to next buffer" },
   {
     "<F10>",
     function()
@@ -15,7 +11,7 @@ nmap({
       print(hlname)
       print(vim.inspect(require("core.colorscheme").get_hl(hlname)))
     end,
-    { noremap },
+    desc = "Inspect highlight",
   },
   -- Turn on `public mode` to make my great editor readable by co-workers.
   {
@@ -36,33 +32,33 @@ nmap({
         end
       end
     end)(),
-    flags,
+    desc = "Toggle public mode",
   },
 })
 
-vmap({
-  { "<LocalLeader>r", "<Cmd>'<,'>w !bash<CR>", { noremap } },
+keymap.vmap():noremap():set({
+  { "<LocalLeader>r", "<Cmd>'<,'>w !bash<CR>", desc = "Run selection as a bash command" },
 })
 
 -- Tab
 local max_tab = 9
 local tab_keymaps = {
-  { "tc", "<Cmd>tabnew<CR>", flags },
-  { "tq", "<Cmd>tabclose<CR>", flags },
-  { "[t", "<Cmd>tabprev<CR>", flags },
-  { "]t", "<Cmd>tabnext<CR>", flags },
+  { "tc", "<Cmd>tabnew<CR>", desc = "Open new tab" },
+  { "tq", "<Cmd>tabclose<CR>", desc = "Close tab" },
+  { "[t", "<Cmd>tabprev<CR>", desc = "Go to previous tab" },
+  { "]t", "<Cmd>tabnext<CR>", desc = "Go to next tab" },
 }
 for i = 1, max_tab do
   table.insert(tab_keymaps, {
     "t" .. i,
     "<Cmd>tabnext" .. i .. "<CR>",
-    flags,
+    desc = "Go to tab No." .. i,
   })
 end
-nmap(tab_keymaps)
+keymap.nmap():silent():noremap():set(tab_keymaps)
 
 -- Folding
-nmap({
+keymap.nmap():silent():noremap():set({
   -- Open/Close fold recursively
-  { "za", "zA", { noremap, silent } },
+  { "za", "zA", desc = "Toggle folding on currenct context" },
 })

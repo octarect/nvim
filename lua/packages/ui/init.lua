@@ -48,7 +48,7 @@ pkg:add({}, {
   -- Terminal
   {
     "akinsho/toggleterm.nvim",
-    keys = { "<Leader>t" },
+    keys = { "<Leader>t", desc = "Open terminal" },
     config = function()
       require("packages.ui.toggleterm")
     end,

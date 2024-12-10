@@ -26,11 +26,11 @@ pkg:add({}, {
       vim.g.NERDDefaultAlign = "left"
       vim.g.NERDCompactSexyComs = 1
       local keymap = require("lib.keymap")
-      keymap.nmap({
-        { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
+      keymap.nmap():silent():set({
+        { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment"},
       })
-      keymap.vmap({
-        { "co", "<Plug>NERDCommenterToggle", { keymap.flags.silent } },
+      keymap.vmap():silent():set({
+        { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },
       })
     end,
   },
@@ -64,8 +64,8 @@ pkg:add({}, {
     cmd = "EasyAlign",
     init = function()
       local keymap = require("lib.keymap")
-      keymap.vmap({
-        { "<CR>", ":EasyAlign<CR>", { keymap.flags.silent, keymap.flags.noremap } },
+      keymap.vmap():noremap():set({
+        { "<CR>", ":EasyAlign<CR>", desc = "Align selection" },
       })
     end,
   },
@@ -79,9 +79,9 @@ pkg:add({}, {
           require("accelerated-jk").move_to(movement)
         end
       end
-      keymap.nmap({
-        { "j", accelerated_move("j"), { keymap.flags.silent } },
-        { "k", accelerated_move("k"), { keymap.flags.silent } },
+      keymap.nmap():silent():set({
+        { "j", accelerated_move("j"), desc = "Move down (accelerated)" },
+        { "k", accelerated_move("k"), desc = "Move up (accelerated)" },
       })
     end,
   },

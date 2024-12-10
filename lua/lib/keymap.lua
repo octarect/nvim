@@ -1,72 +1,111 @@
 local M = {}
 
-M.flags = {
-  noremap = "noremap",
-  desc = "desc",
-  nowait = "nowait",
-  silent = "silent",
-  script = "script",
-  expr = "expr",
-}
+local function set_keymap(buffer, mode, lhs, rhs, options)
+  options = options or {}
 
-local set_keymaps = function(buffer, mode, keymaps)
-  for _, m in ipairs(keymaps) do
-    local opts = {}
+  -- vim api option
+  local o = {}
 
-    local lhs = m[1]
+  -- If rhs is function, set it as callback
+  local rhs0 = ""
+  if type(rhs) == "function" then
+    o.callback = rhs
+  else
+    rhs0 = rhs
+  end
+  -- Parse options
+  for k, v in pairs(options) do
+    o[k] = v
+  end
 
-    local rhs = ""
-    if type(m[2]) == "function" then
-      opts.callback = m[2]
-    else
-      rhs = m[2]
-    end
-
-    for _, flag in ipairs(m[3] or {}) do
-      if M.flags[flag] == nil then
-        error("Invalid flag are specified: " .. flag)
-      end
-      opts[flag] = true
-    end
-
-    if buffer then
-      vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
-    else
-      vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-    end
+  -- Set keymap
+  if buffer then
+    vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs0, o)
+  else
+    vim.api.nvim_set_keymap(mode, lhs, rhs0, o)
   end
 end
 
-M.map = function(keymaps)
-  set_keymaps(false, "", keymaps)
+-- Mapper is an interface to register keymap
+-- It can be called by method-chain style.
+-- Example:
+-- keymap.nmap():silent():noremap():set({
+--   { "<Leader>f", "<Cmd>echo 'hello'<CR>", desc = "test" }
+-- })
+local Mapper = {}
+Mapper.prototype = {
+  buffer = false,
+  mode = "",
+  options = {},
+}
+function Mapper.prototype:set(keymaps)
+  for _, m in ipairs(keymaps) do
+    local lhs = m[1]
+    local rhs = m[2]
+    m[1] = nil
+    m[2] = nil
+
+    local options = vim.tbl_deep_extend("force", self.options, m)
+
+    set_keymap(self.buffer, self.mode, lhs, rhs, options)
+  end
 end
-M.nmap = function(keymaps)
-  set_keymaps(false, "n", keymaps)
+function Mapper.prototype:noremap()
+  self.options.noremap = true
+  return self
 end
-M.imap = function(keymaps)
-  set_keymaps(false, "i", keymaps)
+function Mapper.prototype:nowait()
+  self.options.nowait = true
+  return self
 end
-M.vmap = function(keymaps)
-  set_keymaps(false, "v", keymaps)
+function Mapper.prototype:silent()
+  self.options.silent = true
+  return self
 end
-M.xmap = function(keymaps)
-  set_keymaps(false, "x", keymaps)
+function Mapper.prototype:script()
+  self.options.script = true
+  return self
+end
+function Mapper.prototype:expr()
+  self.options.expr = true
+  return self
+end
+function Mapper.new(buffer, mode)
+  local obj = Mapper.prototype
+  obj.buffer = buffer
+  obj.mode = mode
+  return obj
 end
 
-M.bmap = function(keymaps)
-  set_keymaps(true, "", keymaps)
+M.map = function()
+  return Mapper.new(false, "")
 end
-M.bnmap = function(keymaps)
-  set_keymaps(true, "n", keymaps)
+M.nmap = function()
+  return Mapper.new(false, "n")
 end
-M.bimap = function(keymaps)
-  set_keymaps(true, "i", keymaps)
+M.imap = function()
+  return Mapper.new(false, "i")
 end
-M.bvmap = function(keymaps)
-  set_keymaps(true, "v", keymaps)
+M.vmap = function()
+  return Mapper.new(false, "v")
 end
-M.bxmap = function(keymaps)
-  set_keymaps(true, "x", keymaps)
+M.xmap = function()
+  return Mapper.new(false, "x")
+end
+M.bmap = function()
+  return Mapper.new(true, "")
+end
+M.bnmap = function()
+  return Mapper.new(true, "n")
+end
+M.bimap = function()
+  return Mapper.new(true, "i")
+end
+M.bvmap = function()
+  return Mapper.new(true, "v")
+end
+M.bxmap = function()
+  return Mapper.new(true, "x")
 end
 
 return M
