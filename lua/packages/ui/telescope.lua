@@ -164,9 +164,6 @@ local function init()
           items = {
             { "⚙️ LSPInfo", "LspInfo" },
             { "⚙️ Manage LSP servers", "Mason" },
-            { "🔃Packer: Sync", "PackerSync" },
-            { "🔃Packer: Clean", "PackerClean" },
-            { "🔃Packer: Status", "PackerStatus" },
             { "🌈Change colorscheme", "Telescope colorscheme theme=dropdown" },
             { "📁Browse files", "Telescope find_files" },
             { "📁Browse files in Git Repository", "Telescope git_files" },
@@ -192,6 +189,12 @@ local function init()
                 require("telescope").extensions.notify.notify()
               end,
             },
+            {
+              "🔁Toggle demo mode",
+              function()
+                require("internal.demomode").toggle()
+              end,
+            }
           },
         },
         cursor = {

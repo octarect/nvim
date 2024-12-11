@@ -13,31 +13,6 @@ keymap.nmap():silent():noremap():set({
     end,
     desc = "Inspect highlight",
   },
-  -- Turn on `public mode` to make my great editor readable by co-workers.
-  {
-    "<Leader>os",
-    (function()
-      local public_mode = false
-      return function()
-        if public_mode then
-          -- Turn off
-          public_mode = false
-          opt.listchars = { tab = ">·", nbsp = "+", trail = "·", extends = "→", precedes = "←" }
-          opt.relativenumber = true
-        else
-          -- Turn on
-          public_mode = true
-          opt.listchars = { tab = "  ", nbsp = "+", trail = "·", extends = "→", precedes = "←" }
-          opt.relativenumber = false
-        end
-      end
-    end)(),
-    desc = "Toggle public mode",
-  },
-})
-
-keymap.vmap():noremap():set({
-  { "<LocalLeader>r", "<Cmd>'<,'>w !bash<CR>", desc = "Run selection as a bash command" },
 })
 
 -- Tab
