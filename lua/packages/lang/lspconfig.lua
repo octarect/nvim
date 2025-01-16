@@ -1,10 +1,8 @@
 local lspconfig = require("lspconfig")
+local keymap = require("lib.keymap")
 
 -- Disable logging
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
-
--- Leading keys to use LSP function
-local leader = "<LocalLeader>"
 
 -- Custom border of hover window
 _G.__MyLspFloatingOpts = {
@@ -22,32 +20,10 @@ _G.__MyLspFloatingOpts = {
 }
 
 local on_attach = function(client, bufnr)
-  local function lspmap(m)
-    return leader .. m
-  end
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-  local opts = { noremap = true, silent = true }
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, _G.__MyLspFloatingOpts)
+  -- Don't show message as virtual text
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- Don't show message as virtual text
     virtual_text = false,
   })
-
-  -- Navigate diagnostics
-  buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({ float = _G.__MyLspFloatingOpts })<CR>", opts)
-  buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({ float = _G.__MyLspFloatingOpts })<CR>", opts)
-
-  buf_set_keymap("n", lspmap("h"), "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_set_keymap("n", lspmap("d"), "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  buf_set_keymap("n", lspmap("D"), "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_set_keymap("n", lspmap("i"), "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("n", lspmap("t"), "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  buf_set_keymap("n", lspmap("s"), "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  buf_set_keymap("n", lspmap("a"), "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  buf_set_keymap("n", lspmap("o"), "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 
   -- Highlight a symbol and its references when holding the cursor
   if client.server_capabilities.document_highlight then
@@ -63,22 +39,24 @@ local on_attach = function(client, bufnr)
     )
   end
 
-  -- Show diagnostics which current line includes
-  vim.api.nvim_exec(
-    [[
-    augroup MyAutoCmdLspDiagnostics
-      autocmd!
-      autocmd CursorHold * lua vim.diagnostic.open_float(0, _G.__MyLspFloatingOpts)
-    augroup END
-  ]],
-    false
-  )
-
   -- Add `:Format` command
+  local nmap = keymap.nmap():silent():noremap()
   if client.server_capabilities.document_formatting then
-    buf_set_keymap("n", lspmap("f"), "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    nmap.set({
+      {
+        "<LocalLeader>f",
+        "<cmd>lua vim.lsp.buf.formatting()<CR>",
+        desc = "LSP Format",
+      }
+    })
   elseif client.server_capabilities.document_range_formatting then
-    buf_set_keymap("n", lspmap("f"), "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    nmap.set({
+      {
+        "<LocalLeader>f",
+        "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+        desc = "LSP Format (Range)",
+      }
+    })
   end
 
   -- Configure nvim-navic
