@@ -26,7 +26,7 @@ local on_attach = function(client, bufnr)
   })
 
   -- Highlight a symbol and its references when holding the cursor
-  if client.server_capabilities.document_highlight then
+  if client:supports_method("textDocument/documentHighlight") then
     vim.api.nvim_exec(
       [[
       augroup MyAutoCmdLspDocumentHighlight
@@ -41,7 +41,7 @@ local on_attach = function(client, bufnr)
 
   -- Add `:Format` command
   local nmap = keymap.nmap():silent():noremap()
-  if client.server_capabilities.document_formatting then
+  if client:supports_method("textDocument/formatting") then
     nmap.set({
       {
         "<LocalLeader>f",
@@ -49,7 +49,8 @@ local on_attach = function(client, bufnr)
         desc = "LSP Format",
       }
     })
-  elseif client.server_capabilities.document_range_formatting then
+  end
+  if client:supports_method("textDocument/rangeFormatting") then
     nmap.set({
       {
         "<LocalLeader>f",
@@ -60,7 +61,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- Configure nvim-navic
-  if client.server_capabilities.documentSymbolProvider then
+  if client:supports_method("textDocument/documentSymbol") then
     require("nvim-navic").attach(client, bufnr)
   end
 end
