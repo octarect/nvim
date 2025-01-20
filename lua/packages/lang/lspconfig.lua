@@ -27,16 +27,27 @@ local on_attach = function(client, bufnr)
 
   -- Highlight a symbol and its references when holding the cursor
   if client:supports_method("textDocument/documentHighlight") then
-    vim.api.nvim_exec(
-      [[
-      augroup MyAutoCmdLspDocumentHighlight
-        autocmd! * <buffer>
-        autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-      false
-    )
+    local aug = vim.api.nvim_create_augroup("MyAutoCmdLspDocumentHighlight", {})
+    vim.api.nvim_clear_autocmds({
+      group = aug,
+      buffer = 0,
+    });
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      group = aug,
+      buffer = 0,
+      callback = function(_)
+        vim.lsp.buf.document_highlight()
+      end,
+      desc = "LSP Document Highlight",
+    })
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+      group = aug,
+      buffer = 0,
+      callback = function(_)
+        vim.lsp.buf.clear_references()
+      end,
+      desc = "LSP Document Highlight Clear",
+    })
   end
 
   -- Add `:Format` command
