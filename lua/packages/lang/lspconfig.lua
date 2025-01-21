@@ -50,22 +50,25 @@ local on_attach = function(client, bufnr)
     })
   end
 
-  -- Add `:Format` command
-  local nmap = keymap.nmap():silent():noremap()
   if client:supports_method("textDocument/formatting") then
-    nmap.set({
+    keymap.bnmap():silent():noremap():set({
       {
         "<LocalLeader>f",
-        "<cmd>lua vim.lsp.buf.formatting()<CR>",
+        function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end,
         desc = "LSP Format",
       }
     })
   end
   if client:supports_method("textDocument/rangeFormatting") then
-    nmap.set({
+    keymap.bvmap():silent():noremap():set({
       {
         "<LocalLeader>f",
-        "<cmd>lua vim.lsp.buf.range_formatting()<CR>",
+        function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+        end,
         desc = "LSP Format (Range)",
       }
     })
