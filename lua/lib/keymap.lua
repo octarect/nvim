@@ -71,7 +71,7 @@ function Mapper.prototype:expr()
   return self
 end
 function Mapper.new(buffer, mode)
-  local obj = Mapper.prototype
+  local obj = vim.tbl_deep_extend("force", {}, Mapper.prototype)
   obj.buffer = buffer
   obj.mode = mode
   return obj
