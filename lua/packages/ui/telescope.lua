@@ -183,6 +183,14 @@ local function init()
             { "😀Insert emoji (Nerd Fonts)", [[ lua require"telescope.builtin".symbols{ sources = {"nerd"} } ]] },
             { "😀Insert emoji (kaomoji)", [[ lua require"telescope.builtin".symbols{ sources = {"kaomoji"} } ]] },
             { "🔭Open filetype menu", "Telescope filetype" },
+            { "🪄[AI] Ask copilot", [[ CopilotChat ]] },
+            { "🪄[AI] Explain code", [[ CopilotChatExplain ]] },
+            { "🪄[AI] Review", [[ CopilotChatReview ]] },
+            { "🪄[AI] Fix", [[ CopilotChatFix ]] },
+            { "🪄[AI] Optimize", [[ CopilotChatOptimize ]] },
+            { "🪄[AI] Docs", [[ CopilotChatDocs ]] },
+            { "🪄[AI] Tests", [[ CopilotChatTests ]] },
+            { "🪄[AI] Commit", [[ CopilotChatCommit ]] },
             {
               "🔭Notification History",
               function()

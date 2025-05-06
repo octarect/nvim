@@ -15,7 +15,21 @@ pkg:add({}, {
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-path" },
       { "ray-x/cmp-treesitter" },
-      { "onsails/lspkind-nvim" },
+      {
+        "onsails/lspkind-nvim",
+        config = function()
+          require("packages.edit.lspkind")
+        end,
+      },
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = {
+          { "zbirenbaum/copilot.lua" },
+        },
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
     },
   },
   {

@@ -15,6 +15,7 @@ run: image
 	docker container run --rm -it \
 		-v $(PWD):/root/.config/nvim:ro \
 		-w /root/.config/nvim \
+		-e NVIM_DISABLE_COPILOT=true \
 		$(DOCKER_IMAGE)
 
 .PHONY: install

@@ -4,6 +4,9 @@ local lspkind = require("lspkind")
 local config = require("core.config")
 
 local has_words_before = function()
+  if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
+    return false
+  end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
@@ -11,11 +14,11 @@ end
 local source_menus = {
   nvim_lsp = "[LSP]",
   luasnip = "[Snippet]",
-  cmp_tabnine = "[TabNine]",
   buffer = "[Buffer]",
   path = "[Path]",
   emoji = "[Emoji]",
   treesitter = "[TS]",
+  copilot = "[Copilot]"
 }
 
 cmp.setup({
@@ -32,7 +35,7 @@ cmp.setup({
     { name = "emoji" },
     { name = "buffer" },
     { name = "path" },
-    { name = "cmp_tabnine" },
+    { name = "copilot" },
   }),
   window = {
     documentation = {
@@ -68,7 +71,6 @@ cmp.setup({
     end,
     ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
     }),
   }),
   formatting = {
