@@ -25,3 +25,5 @@ RUN curl -L -o go.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz \
 ENV PATH="/opt/go/bin:${PATH}"
 ## npm
 RUN apt-get -y install nodejs npm
+
+CMD ["/bin/bash"]
