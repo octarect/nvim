@@ -162,27 +162,34 @@ local function init()
       menu = {
         default = {
           items = {
-            { "⚙️ LSPInfo", "LspInfo" },
+            -- Plugin Management
+            { "⚙️ Manage plugins", "Lazy" },
+            { "⚙️ Show LSP info", "LspInfo" },
             { "⚙️ Manage LSP servers", "Mason" },
+            -- Colorscheme
             { "🌈Change colorscheme", "Telescope colorscheme theme=dropdown" },
+            -- File browsing
             { "📁Browse files", "Telescope find_files" },
             { "📁Browse files in Git Repository", "Telescope git_files" },
             { "🔍Search in current directory (live_grep)", "Telescope live_grep" },
-            { " Lists open buffers", "Telescope buffers" },
-            { " Lists available commands", "Telescope commands" },
-            { " Lists tags in current directory", "Telescope tags" },
-            { " Lists marks", "Telescope marks" },
-            { " Lists jumplist", "Telescope jumplist" },
-            { " Lists command history", "Telescope command_history theme=ivy" },
-            { " Lists search history", "Telescope search_history theme=ivy" },
-            { " Lists registers (Paste yanked string)", "Telescope registers" },
-            { " Lists vim autocommands", "Telescope autocommands" },
-            { "🎮Lists keymaps (keymappings)", "Telescope keymaps" },
-            { "⚙️ Show vim options", "Telescope vim_options" },
+            -- Vim
+            { " List open buffers", "Telescope buffers" },
+            { " List available commands", "Telescope commands" },
+            { " List tags in current directory", "Telescope tags" },
+            { " List marks", "Telescope marks" },
+            { " List jumplist", "Telescope jumplist" },
+            { " List command history", "Telescope command_history theme=ivy" },
+            { " List search history", "Telescope search_history theme=ivy" },
+            { " List registers (Paste yanked string)", "Telescope registers" },
+            { " List vim autocommands", "Telescope autocommands" },
+            { " Open filetype menu", "Telescope filetype" },
+            { " Show vim options", "Telescope vim_options" },
+            { "🎮List keymaps (keymappings)", "Telescope keymaps" },
+            -- Emoji
             { "😀Insert emoji", [[ lua require"telescope.builtin".symbols{ sources = {"emoji", "gitmoji"} } ]] },
             { "😀Insert emoji (Nerd Fonts)", [[ lua require"telescope.builtin".symbols{ sources = {"nerd"} } ]] },
             { "😀Insert emoji (kaomoji)", [[ lua require"telescope.builtin".symbols{ sources = {"kaomoji"} } ]] },
-            { "🔭Open filetype menu", "Telescope filetype" },
+            -- Code Actions
             { "🪄[AI] Ask copilot", [[ CopilotChat ]] },
             { "🪄[AI] Explain code", [[ CopilotChatExplain ]] },
             { "🪄[AI] Review", [[ CopilotChatReview ]] },
@@ -191,6 +198,7 @@ local function init()
             { "🪄[AI] Docs", [[ CopilotChatDocs ]] },
             { "🪄[AI] Tests", [[ CopilotChatTests ]] },
             { "🪄[AI] Commit", [[ CopilotChatCommit ]] },
+            -- Misc
             {
               "🔭Notification History",
               function()
@@ -202,7 +210,7 @@ local function init()
               function()
                 require("internal.demomode").toggle()
               end,
-            }
+            },
           },
         },
         cursor = {
