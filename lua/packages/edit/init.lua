@@ -34,7 +34,7 @@ pkg:add({}, {
   },
   {
     "scrooloose/nerdcommenter",
-    keys = { "<Plug>NERDCom" },
+    event = { "LazyFile" },
     init = function()
       vim.g.NERDSpaceDelims = 1
       vim.g.NERDDefaultAlign = "left"
