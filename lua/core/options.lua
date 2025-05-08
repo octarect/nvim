@@ -94,3 +94,8 @@ opt.foldnestmax = 1;
     end,
   })
 end)()
+
+-- Diagnostics
+vim.diagnostic.config({
+  virtual_text = false,
+})

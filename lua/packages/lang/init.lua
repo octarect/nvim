@@ -9,8 +9,8 @@ pkg:add({}, {
       require("packages.lang.lspconfig")
     end,
     dependencies = {
-      { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
+      { "mason-org/mason.nvim" },
+      { "mason-org/mason-lspconfig.nvim" },
       -- Used by lualine
       {
         "SmiteshP/nvim-navic",
