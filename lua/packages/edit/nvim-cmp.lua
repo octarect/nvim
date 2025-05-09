@@ -18,7 +18,7 @@ local source_menus = {
   path = "[Path]",
   emoji = "[Emoji]",
   treesitter = "[TS]",
-  copilot = "[Copilot]"
+  copilot = "[Copilot]",
 }
 
 cmp.setup({

@@ -91,7 +91,7 @@ pkg:add({}, {
           layout = "float",
           keys = {
             toggle_or_jump = "<CR>",
-          }
+          },
         },
         symbol_in_winbar = {
           enable = false,
@@ -132,5 +132,5 @@ pkg:add({}, {
       { "godlygeek/tabular" },
       { "joker1007/vim-markdown-quote-syntax" },
     },
-  }
+  },
 })

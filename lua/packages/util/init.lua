@@ -54,5 +54,5 @@ pkg:add({}, {
       { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim" },
     },
-  }
+  },
 })

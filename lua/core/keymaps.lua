@@ -1,5 +1,4 @@
 local keymap = require("lib.keymap")
-local opt = vim.opt
 
 keymap.nmap():silent():noremap():set({
   { "[b", "<Cmd>bprevious<CR>", desc = "Go to previous buffer" },

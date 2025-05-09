@@ -41,7 +41,7 @@ pkg:add({}, {
       vim.g.NERDCompactSexyComs = 1
       local keymap = require("lib.keymap")
       keymap.nmap():silent():set({
-        { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment"},
+        { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },
       })
       keymap.vmap():silent():set({
         { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },

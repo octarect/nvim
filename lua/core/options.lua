@@ -71,7 +71,7 @@ vim.g.vimsyn_embed = "lPr"
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false
-opt.foldnestmax = 1;
+opt.foldnestmax = 1
 (function()
   -- Temporarily turn off foldmethod on insert mode
   local aug = vim.api.nvim_create_augroup("MyAutoCmdFold", {})
