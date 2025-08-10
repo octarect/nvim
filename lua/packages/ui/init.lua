@@ -1,4 +1,4 @@
-local pkg = require("lib.pkg")
+local pkg = require("external.lazy")
 
 pkg:add({}, {
   -- Statusline

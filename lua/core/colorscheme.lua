@@ -1,8 +1,7 @@
-local config = require("core.config")
-local KVStore = require("lib.kvstore")
+local default_colorscheme = "desert"
 
--- Use KVStore for persistence of settings
-local kvs = KVStore.new(config.cache_path .. "/kv2", "colorscheme")
+-- Initialize cache of colorscheme
+local cache = require("core.utils.cache").new("colorscheme")
 
 -- Helpers
 local hl = function(name, opts)
@@ -82,7 +81,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
     -- Cache colorscheme to restore it on launching neovim next time
     local colorscheme = opts.match
     if vim.fn.has("vim_starting") ~= 1 then
-      kvs:write("current", colorscheme)
+      cache:write(colorscheme)
     end
 
     patch_colorscheme()
@@ -92,7 +91,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 })
 
 -- Initialize colorscheme
-local colorscheme = kvs:read("current") or "desert"
+local colorscheme = cache:read() or default_colorscheme
 
 vim.opt.background = "dark"
 vim.api.nvim_command("colorscheme " .. colorscheme)

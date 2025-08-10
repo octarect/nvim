@@ -1,4 +1,4 @@
-local pkg = require("lib.pkg")
+local pkg = require("external.lazy")
 
 pkg:add({}, {
   -- LSP
@@ -26,7 +26,7 @@ pkg:add({}, {
     "nvimdev/lspsaga.nvim",
     event = { "LspAttach" },
     init = function()
-      local keymap = require("lib.keymap")
+      local keymap = require("core.utils.keymap")
       keymap.nmap():silent():noremap():set({
         {
           "[d",

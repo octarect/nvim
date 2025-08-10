@@ -1,4 +1,4 @@
-local pkg = require("lib.pkg")
+local pkg = require("external.lazy")
 
 local def_path = vim.fn.stdpath("config") .. "/lua/packages"
 

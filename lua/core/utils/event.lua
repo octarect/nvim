@@ -1,7 +1,7 @@
-local M = {}
+local event = {}
 
 local filetype_aug = vim.api.nvim_create_augroup("MyAutoCmdOnFiletype", {})
-M.on_filetype = function(filetype, f)
+event.on_filetype = function(filetype, f)
   vim.api.nvim_create_autocmd({ "FileType" }, {
     group = filetype_aug,
     pattern = filetype,
@@ -9,4 +9,4 @@ M.on_filetype = function(filetype, f)
   })
 end
 
-return M
+return event

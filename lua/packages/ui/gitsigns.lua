@@ -1,5 +1,5 @@
 local config = require("core.config")
-local keymap = require("lib.keymap")
+local keymap = require("core.utils.keymap")
 local gitsigns = require("gitsigns")
 
 gitsigns.setup({

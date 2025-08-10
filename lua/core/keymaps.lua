@@ -1,4 +1,4 @@
-local keymap = require("lib.keymap")
+local keymap = require("core.utils.keymap")
 
 keymap.nmap():silent():noremap():set({
   { "[b", "<Cmd>bprevious<CR>", desc = "Go to previous buffer" },

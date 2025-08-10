@@ -1,4 +1,4 @@
-local pkg = require("lib.pkg")
+local pkg = require("external.lazy")
 
 pkg:add({}, {
   {
@@ -39,7 +39,7 @@ pkg:add({}, {
       vim.g.NERDSpaceDelims = 1
       vim.g.NERDDefaultAlign = "left"
       vim.g.NERDCompactSexyComs = 1
-      local keymap = require("lib.keymap")
+      local keymap = require("core.utils.keymap")
       keymap.nmap():silent():set({
         { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },
       })
@@ -77,7 +77,7 @@ pkg:add({}, {
     "junegunn/vim-easy-align",
     cmd = "EasyAlign",
     init = function()
-      local keymap = require("lib.keymap")
+      local keymap = require("core.utils.keymap")
       keymap.vmap():noremap():set({
         { "<CR>", ":EasyAlign<CR>", desc = "Align selection" },
       })
@@ -87,7 +87,7 @@ pkg:add({}, {
     "rainbowhxch/accelerated-jk.nvim",
     module = "accelerated-jk",
     init = function()
-      local keymap = require("lib.keymap")
+      local keymap = require("core.utils.keymap")
       local accelerated_move = function(movement)
         return function()
           require("accelerated-jk").move_to(movement)

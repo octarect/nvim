@@ -1,4 +1,4 @@
-local keymap = require("lib.keymap")
+local keymap = require("core.utils.keymap")
 
 -- Disable logging
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
