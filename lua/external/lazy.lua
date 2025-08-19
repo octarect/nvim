@@ -44,10 +44,6 @@ function M:load()
     install = {
       colorscheme = { "desert" },
     },
-    -- Automatically check for plugin updates
-    checker = {
-      enabled = true,
-    },
   })
 end
 
