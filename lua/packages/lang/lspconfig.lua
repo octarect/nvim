@@ -3,21 +3,6 @@ local keymap = require("core.utils.keymap")
 -- Disable logging
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 
--- Custom border of hover window
-_G.__MyLspFloatingOpts = {
-  focusable = false,
-  border = {
-    { "+", "FloatBorder" },
-    { "-", "FloatBorder" },
-    { "+", "FloatBorder" },
-    { "|", "FloatBorder" },
-    { "+", "FloatBorder" },
-    { "-", "FloatBorder" },
-    { "+", "FloatBorder" },
-    { "|", "FloatBorder" },
-  },
-}
-
 local on_attach = function(client, bufnr)
   -- Highlight a symbol and its references when holding the cursor
   if client:supports_method("textDocument/documentHighlight") then
