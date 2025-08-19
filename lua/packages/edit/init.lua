@@ -2,35 +2,28 @@ local pkg = require("external.lazy")
 
 pkg:add({}, {
   {
-    "hrsh7th/nvim-cmp",
-    version = false,
+    "saghen/blink.cmp",
+    version = "1.*",
     event = { "InsertEnter" },
     config = function()
-      require("packages.edit.nvim-cmp")
+      require("packages.edit.blink-cmp")
     end,
     dependencies = {
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-cmdline" },
-      { "hrsh7th/cmp-emoji" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-path" },
-      { "ray-x/cmp-treesitter" },
+      {
+        "fang2hou/blink-copilot",
+        dependencies = {
+          "zbirenbaum/copilot.lua",
+        },
+      },
+      { "moyiz/blink-emoji.nvim" },
       {
         "onsails/lspkind-nvim",
         config = function()
           require("packages.edit.lspkind")
         end,
       },
-      {
-        "zbirenbaum/copilot-cmp",
-        dependencies = {
-          { "zbirenbaum/copilot.lua" },
-        },
-        config = function()
-          require("copilot_cmp").setup()
-        end,
-      },
-    },
+      { "nvim-tree/nvim-web-devicons" },
+    }
   },
   {
     "scrooloose/nerdcommenter",

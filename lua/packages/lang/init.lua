@@ -1,4 +1,5 @@
 local pkg = require("external.lazy")
+local config = require("core.config")
 
 pkg:add({}, {
   -- LSP
@@ -19,7 +20,7 @@ pkg:add({}, {
         end,
       },
       -- Integrate LSP into completion
-      { "hrsh7th/cmp-nvim-lsp" },
+      { "saghen/blink.cmp" },
     },
   },
   {
@@ -72,18 +73,7 @@ pkg:add({}, {
     end,
     config = function()
       require("lspsaga").setup({
-        ui = {
-          border = {
-            { "+", "FloatBorder" },
-            { "-", "FloatBorder" },
-            { "+", "FloatBorder" },
-            { "|", "FloatBorder" },
-            { "+", "FloatBorder" },
-            { "-", "FloatBorder" },
-            { "+", "FloatBorder" },
-            { "|", "FloatBorder" },
-          },
-        },
+        ui = config.window,
         lightbulb = {
           enable = false,
         },

@@ -85,11 +85,6 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
   end,
 })
 
--- Global LSP config
-vim.lsp.config("*", {
-  capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-})
-
 -- Install and manage LSP servers
 require("mason").setup({})
 require("mason-lspconfig").setup({
