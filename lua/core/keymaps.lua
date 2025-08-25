@@ -36,3 +36,22 @@ keymap.nmap():silent():noremap():set({
   -- Open/Close fold recursively
   { "za", "zA", desc = "Toggle folding on currenct context" },
 })
+
+-- Terminal
+local terminal = require("core.actions.terminal").new({
+  height_ratio = 0.25,
+  min_height = 5,
+  on_create = function()
+    keymap.bnmap():silent():noremap():set({
+      { "q", "<Cmd>q<CR>", desc = "Close the terminal buffer" },
+    })
+    keymap.btmap():silent():noremap():set({
+      { "<C-j><C-j>", "<C-\\><C-n>", desc = "Exit terminal mode" },
+    })
+  end,
+})
+keymap.nmap():silent():noremap():set({
+  { "<Leader>tv", function() terminal:open("vertical") end, desc = "Open vertical terminal" },
+  { "<Leader>ts", function() terminal:open("horizontal") end, desc = "Open horizontal terminal" },
+  { "<Leader>tt", function() terminal:open() end, desc = "Open terminal" },
+})

@@ -109,6 +109,9 @@ end
 function keymap.xmap()
   return keymap.new(false, "x")
 end
+function keymap.tmap()
+  return keymap.new(false, "t")
+end
 function keymap.bmap()
   return keymap.new(true, "")
 end
@@ -123,6 +126,9 @@ function keymap.bvmap()
 end
 function keymap.bxmap()
   return keymap.new(true, "x")
+end
+function keymap.btmap()
+  return keymap.new(true, "t")
 end
 
 return keymap
