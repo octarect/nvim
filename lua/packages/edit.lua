@@ -2,8 +2,8 @@ return {
   -- Syntax
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "LazyFile" },
     build = ":TSUpdate",
+    event = { "LazyFile" },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
@@ -93,20 +93,16 @@ return {
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
+    opts = {},
   },
   {
     "utilyre/sentiment.nvim",
-    event = "VeryLazy",
     version = "*",
+    event = "VeryLazy",
     init = function()
       vim.g.loaded_matchparen = 1
     end,
-  },
-
-  -- Cursorline
-  {
-    "RRethy/vim-illuminate",
-    event = { "LazyFile" },
+    opts = {},
   },
 
   -- Formatting
