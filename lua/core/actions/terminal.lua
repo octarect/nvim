@@ -31,7 +31,8 @@ function terminal:open(direction)
     vim.cmd("vs | vertical resize -5")
   elseif direction == "horizontal" then
     -- Open the buffer with N % of current buffer
-    local height = math.max(self.config.min_height, math.floor(vim.api.nvim_win_get_height(0) * self.config.height_ratio))
+    local height =
+      math.max(self.config.min_height, math.floor(vim.api.nvim_win_get_height(0) * self.config.height_ratio))
     vim.cmd("botright new | resize " .. height)
   end
 

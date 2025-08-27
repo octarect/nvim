@@ -51,7 +51,25 @@ local terminal = require("core.actions.terminal").new({
   end,
 })
 keymap.nmap():silent():noremap():set({
-  { "<Leader>tv", function() terminal:open("vertical") end, desc = "Open vertical terminal" },
-  { "<Leader>ts", function() terminal:open("horizontal") end, desc = "Open horizontal terminal" },
-  { "<Leader>tt", function() terminal:open() end, desc = "Open terminal" },
+  {
+    "<Leader>tv",
+    function()
+      terminal:open("vertical")
+    end,
+    desc = "Open vertical terminal",
+  },
+  {
+    "<Leader>ts",
+    function()
+      terminal:open("horizontal")
+    end,
+    desc = "Open horizontal terminal",
+  },
+  {
+    "<Leader>tt",
+    function()
+      terminal:open()
+    end,
+    desc = "Open terminal",
+  },
 })
