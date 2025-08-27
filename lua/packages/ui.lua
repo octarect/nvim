@@ -18,6 +18,10 @@ end
 return {
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "SmiteshP/nvim-navic",
+    },
     opts = {
       options = {
         icons_enabled = true,
@@ -65,10 +69,6 @@ return {
       winbar = {},
       inactive_winbar = {},
       extensions = {},
-    },
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-      { "SmiteshP/nvim-navic" },
     },
   },
   {

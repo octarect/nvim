@@ -4,6 +4,10 @@ return {
   -- LSP
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
+    },
     event = { "LazyFile" },
     init = function()
       -- Disable logging
@@ -89,13 +93,12 @@ return {
         end,
       })
     end,
-    dependencies = {
-      { "mason-org/mason.nvim" },
-      { "mason-org/mason-lspconfig.nvim" },
-    },
   },
   {
     "mason-org/mason-lspconfig.nvim",
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+    },
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
       vim.lsp.enable(require("mason-lspconfig").get_installed_servers())
@@ -116,12 +119,6 @@ return {
         "yamlls",
       },
     },
-    dependencies = {
-      {
-        "mason-org/mason.nvim",
-        opts = {},
-      },
-    },
   },
   {
     "onsails/lspkind-nvim",
@@ -136,6 +133,10 @@ return {
   },
   {
     "nvimdev/lspsaga.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
     event = { "LspAttach" },
     init = function()
       local keymap = require("core.utils.keymap")
@@ -196,10 +197,6 @@ return {
       symbol_in_winbar = {
         enable = false,
       },
-    },
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter" },
-      { "nvim-tree/nvim-web-devicons" },
     },
   },
 }

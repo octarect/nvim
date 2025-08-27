@@ -30,13 +30,13 @@ return {
   },
   {
     "plasticboy/vim-markdown",
+    dependencies = {
+      "godlygeek/tabular",
+      "joker1007/vim-markdown-quote-syntax",
+    },
     ft = { "markdown" },
     config = function()
       vim.g.vim_markdown_folding_disabled = 1
     end,
-    dependencies = {
-      { "godlygeek/tabular" },
-      { "joker1007/vim-markdown-quote-syntax" },
-    },
   },
 }

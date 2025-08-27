@@ -3,6 +3,9 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-context",
+    },
     event = { "LazyFile" },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
@@ -53,13 +56,10 @@ return {
         "xml",
         "yaml",
       },
-    },
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter-context" },
-    },
-    highlight = {
-      enable = true,
-      disable = {},
+      highlight = {
+        enable = true,
+        disable = {},
+      },
     },
   },
   {

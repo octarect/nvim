@@ -12,6 +12,17 @@ return {
   {
     "saghen/blink.cmp",
     version = "1.*",
+    dependencies = {
+      "moyiz/blink-emoji.nvim",
+      "onsails/lspkind-nvim",
+      "nvim-tree/nvim-web-devicons",
+      {
+        "fang2hou/blink-copilot",
+        dependencies = {
+          "zbirenbaum/copilot.lua",
+        },
+      },
+    },
     event = { "InsertEnter" },
     --- @module "blink.cmp"
     --- @type blink.cmp.Config
@@ -127,17 +138,6 @@ return {
           },
         },
       },
-    },
-    dependencies = {
-      {
-        "fang2hou/blink-copilot",
-        dependencies = {
-          "zbirenbaum/copilot.lua",
-        },
-      },
-      { "moyiz/blink-emoji.nvim" },
-      { "onsails/lspkind-nvim" },
-      { "nvim-tree/nvim-web-devicons" },
     },
   },
 }

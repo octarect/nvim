@@ -30,6 +30,14 @@ end
 return {
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "nvim-telescope/telescope-symbols.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "octarect/telescope-menu.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
     module = "telescope",
     cmd = "Telescope",
     init = function()
@@ -181,13 +189,5 @@ return {
       require("telescope").load_extension("file_browser")
       require("telescope").load_extension("notify")
     end,
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-tree/nvim-web-devicons" },
-      { "nvim-telescope/telescope-symbols.nvim" },
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-file-browser.nvim" },
-      { "octarect/telescope-menu.nvim" },
-    },
   },
 }
