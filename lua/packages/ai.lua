@@ -31,9 +31,5 @@ return {
     opts = {
       prompts = {},
     },
-    dependencies = {
-      { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim" },
-    },
   },
 }
