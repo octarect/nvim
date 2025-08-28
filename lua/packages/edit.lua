@@ -36,6 +36,7 @@ return {
         "java",
         "jq",
         "json",
+        "jsonc",
         "lua",
         "luadoc",
         "make",

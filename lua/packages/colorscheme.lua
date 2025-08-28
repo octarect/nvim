@@ -14,6 +14,9 @@ local packages = {
       vim.g.oceanic_material_allow_italic = 1
     end,
   },
+  {
+    "folke/tokyonight.nvim",
+  },
 }
 
 for i, p in ipairs(packages) do

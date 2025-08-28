@@ -185,4 +185,42 @@ return {
       vim.notify = require("notify")
     end,
   },
+  -- Markdown rendering
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    ft = { "codecompanion", "copilot-chat" },
+    -- ft = { "codecompanion" },
+    --- @module "render-markdown.nvim"
+    --- @type render.md.UserConfig
+    opts = {
+      render_modes = true,
+      sign = {
+        enabled = false,
+      },
+      latex = {
+        enabled = false,
+      },
+      -- overrides = {
+      --   filetype = {
+      --     codecompanion = {
+      --       html = {
+      --         tag = {
+      --           buf = { icon = " ", highlight = "CodeCompanionChatIcon" },
+      --           file = { icon = " ", highlight = "CodeCompanionChatIcon" },
+      --           group = { icon = " ", highlight = "CodeCompanionChatIcon" },
+      --           help = { icon = "󰘥 ", highlight = "CodeCompanionChatIcon" },
+      --           image = { icon = " ", highlight = "CodeCompanionChatIcon" },
+      --           symbols = { icon = " ", highlight = "CodeCompanionChatIcon" },
+      --           tool = { icon = "󰯠 ", highlight = "CodeCompanionChatIcon" },
+      --           url = { icon = "󰌹 ", highlight = "CodeCompanionChatIcon" },
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
+    },
+  },
 }
