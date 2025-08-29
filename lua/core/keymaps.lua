@@ -73,3 +73,8 @@ keymap.nmap():silent():noremap():set({
     desc = "Open terminal",
   },
 })
+
+-- Menu
+keymap.nmap():silent():noremap():set({
+  { "<Leader>dm", "<Cmd>OpenMenu<CR>", desc = "Open menu" },
+})

@@ -35,10 +35,11 @@ return {
       "nvim-tree/nvim-web-devicons",
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
-      "octarect/telescope-menu.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     module = "telescope",
+    event = "User MenuOpen", -- Triggered by Ex Command `OpenMenu`, see plugin/menu.lua.
     cmd = "Telescope",
     init = function()
       local keymap = require("core.utils.keymap")
@@ -48,7 +49,6 @@ return {
         { "<Leader>dg", picker_caller("builtin/live_grep"), desc = "Grep" },
         { "<Leader>db", picker_caller("builtin/buffers"), desc = "List buffers" },
         { "<Leader>dc", picker_caller("builtin/colorscheme", { theme = "dropdown" }), desc = "Change colorscheme" },
-        { "<Leader>dm", picker_caller("menu/default", { theme = "dropdown" }), desc = "List menus" },
         {
           "<Leader>f",
           function()
@@ -100,6 +100,9 @@ return {
           },
         },
         extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_cursor()
+          },
           fzf = {
             fuzzy = true,
             override_generic_sorter = true,
@@ -135,59 +138,12 @@ return {
               },
             }
           end)(),
-          menu = {
-            default = {
-              items = {
-                -- Plugin Management
-                { "🛠️Manage plugins", "Lazy" },
-                { "📚Show LSP info", "LspInfo" },
-                { "💻Manage LSP servers", "Mason" },
-                -- Colorscheme
-                { "🌈Change colorscheme", "Telescope colorscheme theme=dropdown" },
-                -- Vim
-                { " List open buffers", "Telescope buffers" },
-                { " List available commands", "Telescope commands" },
-                { " List tags in current directory", "Telescope tags" },
-                { " List marks", "Telescope marks" },
-                { " List jumplist", "Telescope jumplist" },
-                { " List command history", "Telescope command_history theme=ivy" },
-                { " List search history", "Telescope search_history theme=ivy" },
-                { " List registers (Paste yanked string)", "Telescope registers" },
-                { " List vim autocommands", "Telescope autocommands" },
-                { " Open filetype menu", "Telescope filetype" },
-                { " Show vim options", "Telescope vim_options" },
-                { "🎮List keymaps (keymappings)", "Telescope keymaps" },
-                -- Code Actions
-                { "🪄[AI] Ask copilot", [[ CopilotChat ]] },
-                { "🪄[AI] Explain code", [[ CopilotChatExplain ]] },
-                { "🪄[AI] Review", [[ CopilotChatReview ]] },
-                { "🪄[AI] Fix", [[ CopilotChatFix ]] },
-                { "🪄[AI] Optimize", [[ CopilotChatOptimize ]] },
-                { "🪄[AI] Docs", [[ CopilotChatDocs ]] },
-                { "🪄[AI] Tests", [[ CopilotChatTests ]] },
-                { "🪄[AI] Commit", [[ CopilotChatCommit ]] },
-                -- Misc
-                {
-                  "🔭Notification History",
-                  function()
-                    require("telescope").extensions.notify.notify()
-                  end,
-                },
-                {
-                  "🔁Toggle demo mode",
-                  function()
-                    require("core.actions.demomode").toggle()
-                  end,
-                },
-              },
-            },
-          },
         },
       })
       require("telescope").load_extension("fzf")
-      require("telescope").load_extension("menu")
       require("telescope").load_extension("file_browser")
       require("telescope").load_extension("notify")
+      require("telescope").load_extension("ui-select")
     end,
   },
 }
