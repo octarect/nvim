@@ -36,4 +36,46 @@ require("config.filetypes")
 require("config.keymaps")
 require("core.hack")
 require("packages")
-require("lib.colorscheme")
+
+require("lib.colorscheme").setup({
+  on_change = function(_)
+    local hl = require("lib.colorscheme").hl
+    local link = require("lib.colorscheme").link
+    local defined = require("lib.colorscheme").defined
+
+    -- Global settings
+    hl("LineNr", { fg = "#efefef", ctermfg = 252 })
+    hl("Whitespace", { fg = "#b0bec5", ctermfg = 96 })
+    hl("VertSplit", { fg = "Black", ctermfg = "Black" })
+    hl("SignColumn", { fg = "#ebdbb2", ctermfg = 187 })
+
+    -- Remove background color of blank area (EndOfBuffer) under EOF
+    if vim.fn.has("nvim") == 1 or vim.fn.has("patch-7.4.237") then
+      hl("EndOfBuffer", {})
+    end
+
+    -- Highlight groups for gitsigns
+    hl("GitSignsAdd", { fg = "#00e676", ctermfg = 2 })
+    hl("GitSignsChange", { fg = "#ffc400", ctermfg = 3 })
+    hl("GitSignsDelete", { fg = "#ff3d00", ctermfg = 1 })
+
+    -- Built-in LSP
+    hl("LspDiagnosticsSignError", { fg = "#fd8489", ctermfg = 210, bold = true })
+    hl("LspDiagnosticsSignWarning", { fg = "#fedf81", ctermfg = 222, bold = true })
+    hl("LspDiagnosticsSignInformation", { fg = "#a8d2eb", ctermfg = 153, bold = true })
+    hl("LspDiagnosticsSignhlnt", { fg = "#a9dd9d", ctermfg = 150, bold = true })
+    link("LspReferenceRead", "Search")
+    link("LspReferenceText", "Search")
+    link("LspReferenceWrite", "Search")
+
+    -- Treesitter support
+    if not defined("@text.diff.add") then
+      link("@text.diff.add", "DiffAdd")
+      link("@text.diff.delete", "DiffDelete")
+      link("@attribute", "DiffChange")
+    end
+
+    -- Make border of floating window blend into the background
+    link("FloatBorder", "Normal")
+  end
+})

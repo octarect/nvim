@@ -1,16 +1,67 @@
 local default_colorscheme = "desert"
 
--- Initialize cache of colorscheme
-local cache = require("lib.cache").new("colorscheme")
+local M = {}
+
+---@class lib.colorscheme.OnChangeEvent
+---@field colorscheme string
+
+---@class lib.colorscheme.Config
+---@field on_change? fun(event: lib.colorscheme.OnChangeEvent): nil Callback function executed when colorscheme is changed.
+local defaults = {
+  on_change = nil,
+}
+
+--- Setup colorscheme
+---@param opts? lib.colorscheme.Config
+function M.setup(opts)
+  opts = vim.tbl_deep_extend("force", defaults, opts or {})
+
+  -- Initialize cache of colorscheme
+  local cache = require("lib.cache").new("colorscheme")
+
+  -- Enable 24-bit RGB color if using nvim
+  if vim.fn.has("nvim") == 1 then
+    vim.opt.termguicolors = true
+  end
+
+  -- Define event for colorscheme change to reset and cache it
+  -- @return bool It is always false. See :h nvim_create_autocmd()
+  local aug = vim.api.nvim_create_augroup("MyAutoCmdColorScheme", {})
+  vim.api.nvim_create_autocmd({ "ColorSchemePre" }, {
+    group = aug,
+    pattern = "*",
+    command = "hi clear",
+  })
+  vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+    group = aug,
+    pattern = "*",
+    callback = function(args)
+      -- Cache colorscheme to restore it on launching neovim next time
+      local colorscheme = args.match
+      if vim.fn.has("vim_starting") ~= 1 then
+        cache:write(colorscheme)
+      end
+
+      -- patch_colorscheme()
+      if opts.on_change ~= nil then
+        opts.on_change({ colorscheme = colorscheme })
+      end
+
+      return false
+    end,
+  })
+
+  -- Initialize colorscheme.
+  -- If cache exists, use it. Otherwise, use default colorscheme.
+  vim.opt.background = "dark"
+  vim.api.nvim_command("colorscheme " .. (cache:read() or default_colorscheme))
+end
 
 -- Helpers
-local hl = function(name, opts)
-  vim.api.nvim_set_hl(0, name, opts)
-end
-local link = function(name, link_to)
-  vim.api.nvim_set_hl(0, name, { link = link_to })
-end
-local get_hl = function(name)
+
+--- Get highlight group definition
+---@param name string highlight group name
+function M.get_hl(name)
   local status, result = pcall(function()
     return vim.api.nvim_get_hl_by_name(name, true)
   end)
@@ -19,85 +70,24 @@ local get_hl = function(name)
   end
   return result
 end
-local defined = function(name)
-  return get_hl(name)[true] == nil
+
+--- Set highlight group
+---@param name string highlight group name
+function M.hl(name, opts)
+  vim.api.nvim_set_hl(0, name, opts)
 end
 
--- Apply patches to colorscheme
-local patch_colorscheme = function()
-  -- Global settings
-  hl("LineNr", { fg = "#efefef", ctermfg = 252 })
-  hl("Whitespace", { fg = "#b0bec5", ctermfg = 96 })
-  hl("VertSplit", { fg = "Black", ctermfg = "Black" })
-  hl("SignColumn", { fg = "#ebdbb2", ctermfg = 187 })
-
-  -- Remove background color of blank area (EndOfBuffer) under EOF
-  if vim.fn.has("nvim") == 1 or vim.fn.has("patch-7.4.237") then
-    hl("EndOfBuffer", {})
-  end
-
-  -- Highlight groups for gitsigns
-  hl("GitSignsAdd", { fg = "#00e676", ctermfg = 2 })
-  hl("GitSignsChange", { fg = "#ffc400", ctermfg = 3 })
-  hl("GitSignsDelete", { fg = "#ff3d00", ctermfg = 1 })
-
-  -- Built-in LSP
-  hl("LspDiagnosticsSignError", { fg = "#fd8489", ctermfg = 210, bold = true })
-  hl("LspDiagnosticsSignWarning", { fg = "#fedf81", ctermfg = 222, bold = true })
-  hl("LspDiagnosticsSignInformation", { fg = "#a8d2eb", ctermfg = 153, bold = true })
-  hl("LspDiagnosticsSignhlnt", { fg = "#a9dd9d", ctermfg = 150, bold = true })
-  link("LspReferenceRead", "Search")
-  link("LspReferenceText", "Search")
-  link("LspReferenceWrite", "Search")
-
-  -- Treesitter support
-  if not defined("@text.diff.add") then
-    link("@text.diff.add", "DiffAdd")
-    link("@text.diff.delete", "DiffDelete")
-    link("@attribute", "DiffChange")
-  end
-
-  -- Make border of floating window blend into the background
-  link("FloatBorder", "Normal")
+--- Set highlight group link
+---@param name string source
+---@param link_to string destination
+function M.link(name, link_to)
+  vim.api.nvim_set_hl(0, name, { link = link_to })
 end
 
--- Enable 24-bit RGB color
-if vim.fn.has("nvim") == 1 then
-  vim.opt.termguicolors = true
+--- Check if highlight group is defined
+---@param name string highlight group name
+function M.defined(name)
+  return M.get_hl(name)[true] == nil
 end
-
--- Define event for colorscheme change to reset and cache it
--- @return bool It is always false. See :h nvim_create_autocmd()
-local aug = vim.api.nvim_create_augroup("MyAutoCmdColorScheme", {})
-vim.api.nvim_create_autocmd({ "ColorSchemePre" }, {
-  group = aug,
-  pattern = "*",
-  command = "hi clear",
-})
-vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-  group = aug,
-  pattern = "*",
-  callback = function(opts)
-    -- Cache colorscheme to restore it on launching neovim next time
-    local colorscheme = opts.match
-    if vim.fn.has("vim_starting") ~= 1 then
-      cache:write(colorscheme)
-    end
-
-    patch_colorscheme()
-
-    return false
-  end,
-})
-
--- Initialize colorscheme
-local colorscheme = cache:read() or default_colorscheme
-
-vim.opt.background = "dark"
-vim.api.nvim_command("colorscheme " .. colorscheme)
-
-local M = {}
-
-M.get_hl = get_hl
 
 return M
