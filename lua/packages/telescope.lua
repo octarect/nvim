@@ -41,7 +41,7 @@ return {
     module = "telescope",
     cmd = "Telescope",
     init = function()
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       keymap.nmap():silent():noremap():set({
         { "<Leader>df", picker_caller("builtin/git_files"), desc = "List files (Git)" },
         { "<Leader>dF", picker_caller("builtin/find_files"), desc = "List files (All)" },
@@ -176,7 +176,7 @@ return {
                 {
                   "🔁Toggle demo mode",
                   function()
-                    require("core.actions.demomode").toggle()
+                    require("lib.demomode").toggle()
                   end,
                 },
               },

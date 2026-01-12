@@ -1,20 +1,20 @@
 --- Terminal
---- @class core.utils.terminal
---- @field private config core.utils.terminal.Config
+--- @class lib.terminal
+--- @field private config lib.terminal.Config
 --- @field private bunfr number Cache the previously opened terminal buffer number
 local terminal = {}
 terminal.__index = terminal
 
---- @alias core.utils.terminal.CallbackFunc fun(bufnr: number)
+--- @alias lib.terminal.CallbackFunc fun(bufnr: number)
 
---- @class core.utils.terminal.Config
+--- @class lib.terminal.Config
 --- @field height_ratio number
 --- @field min_height number
---- @field on_create? core.utils.terminal.CallbackFunc Event handler when terminal is created
+--- @field on_create? lib.terminal.CallbackFunc Event handler when terminal is created
 
 --- Initialize a terminal
---- @param cfg core.utils.terminal.Config
---- @return core.utils.terminal
+--- @param cfg lib.terminal.Config
+--- @return lib.terminal
 function terminal.new(cfg)
   cfg.on_create = cfg.on_create or function() end
   local self = setmetatable({

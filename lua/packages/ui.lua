@@ -117,7 +117,7 @@ return {
       local gitsigns = require("gitsigns")
       gitsigns.setup(opts)
 
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       keymap.nmap():silent():set({
         { "[c", gitsigns.prev_hunk, desc = "Jump to previous git hunk" },
         { "]c", gitsigns.next_hunk, desc = "Jump to next git hunk" },

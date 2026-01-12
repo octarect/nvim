@@ -1,7 +1,7 @@
 local default_colorscheme = "desert"
 
 -- Initialize cache of colorscheme
-local cache = require("core.utils.cache").new("colorscheme")
+local cache = require("lib.cache").new("colorscheme")
 
 -- Helpers
 local hl = function(name, opts)

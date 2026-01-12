@@ -33,7 +33,7 @@ return {
     "folke/sidekick.nvim",
     lazy = true,
     init = function()
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       keymap.nmap():silent():set({
         {
           "<Leader>as",

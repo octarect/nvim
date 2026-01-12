@@ -3,7 +3,7 @@ return {
     "rainbowhxch/accelerated-jk.nvim",
     module = "accelerated-jk",
     init = function()
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       local accelerated_move = function(movement)
         return function()
           require("accelerated-jk").move_to(movement)

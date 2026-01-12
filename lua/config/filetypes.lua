@@ -1,4 +1,4 @@
-local on_filetype = require("core.utils.event").on_filetype
+local on_filetype = require("lib.event").on_filetype
 
 local softtab_2sp = function()
   vim.bo.tabstop = 2

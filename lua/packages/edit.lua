@@ -79,7 +79,7 @@ return {
       vim.g.NERDDefaultAlign = "left"
       vim.g.NERDCompactSexyComs = 1
 
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       keymap.nmap():silent():set({
         { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },
       })
@@ -110,7 +110,7 @@ return {
     "junegunn/vim-easy-align",
     cmd = "EasyAlign",
     init = function()
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       keymap.vmap():noremap():set({
         { "<CR>", ":EasyAlign<CR>", desc = "Align selection" },
       })

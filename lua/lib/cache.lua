@@ -9,14 +9,14 @@ local function cache_file_path(key)
   return cache_dir_path .. "/" .. key
 end
 
---- @class core.utils.cache
+--- @class lib.cache
 --- @field key string
 local cache = {}
 cache.__index = cache
 
 --- Initalize a new persistence data.
 --- @param key string The key of data
---- @return core.utils.cache
+--- @return lib.cache
 function cache.new(key)
   if not key then
     error("required argument 'key' is missing")

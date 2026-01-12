@@ -1,5 +1,5 @@
 --- A helper module for setting keymaps in Neovim.
---- @class core.utils.keymap
+--- @class lib.keymap
 local keymap = {}
 keymap.__index = keymap
 
@@ -84,7 +84,7 @@ end
 --- Create an instance of keymap
 --- @param buffer boolean If true, set keymap for buffer-local
 --- @param mode string The mode of keymap, e.g. "n", "i", "v", "x", etc.
---- @return core.utils.keymap
+--- @return lib.keymap
 function keymap.new(buffer, mode)
   local self = setmetatable({
     buffer = buffer,

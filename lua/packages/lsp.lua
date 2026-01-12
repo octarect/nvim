@@ -14,7 +14,7 @@ return {
       vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     config = function()
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
 
       -- Event handler when LSP attaches to a buffer
       local on_attach = function(client, bufnr)
@@ -139,7 +139,7 @@ return {
     },
     event = { "LspAttach" },
     init = function()
-      local keymap = require("core.utils.keymap")
+      local keymap = require("lib.keymap")
       keymap.nmap():silent():noremap():set({
         {
           "[d",

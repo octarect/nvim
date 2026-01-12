@@ -1,4 +1,4 @@
-local keymap = require("core.utils.keymap")
+local keymap = require("lib.keymap")
 
 keymap.nmap():silent():noremap():set({
   { "[b", "<Cmd>bprevious<CR>", desc = "Go to previous buffer" },
@@ -8,7 +8,7 @@ keymap.nmap():silent():noremap():set({
     function()
       local hlname = vim.api.nvim_exec("echo synIDattr(synID(line('.'), col('.'), 1), 'name')", true)
       print(hlname)
-      print(vim.inspect(require("core.colorscheme").get_hl(hlname)))
+      print(vim.inspect(require("lib.colorscheme").get_hl(hlname)))
     end,
     desc = "Inspect highlight",
   },
@@ -38,7 +38,7 @@ keymap.nmap():silent():noremap():set({
 })
 
 -- Terminal
-local terminal = require("core.actions.terminal").new({
+local terminal = require("lib.terminal").new({
   height_ratio = 0.25,
   min_height = 5,
   on_create = function()
