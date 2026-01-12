@@ -1,4 +1,4 @@
-local config = require("core.config")
+local config = require("config.vars")
 
 local has_words_before = function()
   if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then

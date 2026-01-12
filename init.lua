@@ -31,9 +31,9 @@ if vim.fn.has("vim_starting") == 1 then
   vim.api.nvim_command("syntax enable")
 end
 
-require("core.options")
-require("core.filetypes")
+require("config.options")
+require("config.filetypes")
+require("config.keymaps")
 require("core.hack")
 require("packages")
 require("core.colorscheme")
-require("core.keymaps")

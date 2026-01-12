@@ -60,7 +60,7 @@ return {
     end,
     config = function()
       local actions = require("telescope.actions")
-      local config = require("core.config")
+      local config = require("config.vars")
 
       require("telescope").setup({
         defaults = {

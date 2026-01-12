@@ -1,5 +1,5 @@
 local opt = vim.opt
-local cache_path = require("core.config").cache_path
+local cache_path = require("config.vars").cache_path
 
 if vim.fn.has("vim_starting") == 1 then
   opt.tabstop = 4

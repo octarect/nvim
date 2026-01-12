@@ -1,4 +1,4 @@
-local config = require("core.config")
+local config = require("config.vars")
 
 local cache_dir_path = config.cache_path .. "/cached-values"
 

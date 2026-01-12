@@ -1,4 +1,4 @@
-local config = require("core.config")
+local config = require("config.vars")
 
 local get_sections = function(active)
   local sections = {
