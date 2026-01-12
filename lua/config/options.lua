@@ -1,5 +1,4 @@
 local opt = vim.opt
-local cache_path = require("config.vars").cache_path
 
 if vim.fn.has("vim_starting") == 1 then
   opt.tabstop = 4
@@ -50,7 +49,7 @@ opt.backup = false
 opt.writebackup = false
 
 opt.undofile = true
-vim.g.undodir = cache_path .. "/undo"
+vim.g.undodir = vim.fn.stdpath("cache") .. "/undo"
 
 opt.shortmess = "aTc"
 

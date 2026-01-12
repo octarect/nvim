@@ -1,34 +1,25 @@
-local config = require("config.vars")
-
-local cache_dir_path = config.cache_path .. "/cached-values"
-
---- Return the path to the cache file
---- @param key string The cache key
---- @return string
-local function cache_file_path(key)
-  return cache_dir_path .. "/" .. key
-end
-
 --- @class lib.cache
---- @field key string
+--- @field cache_path string
 local cache = {}
 cache.__index = cache
 
 --- Initalize a new persistence data.
---- @param key string The key of data
+--- @param key string cache key
 --- @return lib.cache
 function cache.new(key)
   if not key then
     error("required argument 'key' is missing")
   end
-  local self = setmetatable({ key = key }, cache)
+  local self = setmetatable({
+    cache_path = vim.fn.stdpath("cache") .. "/values/" .. key,
+  }, cache)
   return self
 end
 
 --- Read the value from the cache
 --- @return string|nil
 function cache:read()
-  local f = io.open(cache_file_path(self.key), "r")
+  local f = io.open(self.cache_path, "r")
   if not f then
     return nil
   end
@@ -47,14 +38,15 @@ function cache:write(value)
   end
 
   -- Ensure the cache directory exists
-  if vim.fn.isdirectory(cache_dir_path) ~= 1 then
-    os.execute("mkdir -p " .. cache_dir_path)
+  local dirname = vim.fn.expand(self.cache_path .. ":h")
+  if vim.fn.isdirectory(dirname) ~= 1 then
+    os.execute("mkdir -p " .. dirname)
   end
 
   -- Write the value to the cache file
-  local f, err = io.open(cache_file_path(self.key), "w")
+  local f, err = io.open(self.cache_path, "w")
   if not f then
-    error(string.format("failed to open cache_file_path: %s", err))
+    error(string.format("failed to open cache_path: %s", err))
     return false
   end
   f:write(value)
