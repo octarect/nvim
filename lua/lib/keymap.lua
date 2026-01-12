@@ -1,5 +1,5 @@
 --- A helper module for setting keymaps in Neovim.
---- @class lib.keymap
+---@class lib.keymap
 local keymap = {}
 keymap.__index = keymap
 
@@ -30,13 +30,13 @@ local function set_keymap(buffer, mode, lhs, rhs, options)
 end
 
 --- Set keymaps
---- @param keymaps table A list of keymaps, each keymap is a table with the following structure:
+---@param keymaps table A list of keymaps, each keymap is a table with the following structure:
 ---   { lhs, rhs, [options] }
 ---   where:
 ---   - lhs: The left-hand side of the keymap (the key combination to trigger)
 ---   - rhs: The right-hand side of the keymap (the command or function to execute)
 ---   - options: Optional table of options for the keymap, such as noremap, silent, etc.
---- @return nil
+---@return nil
 function keymap:set(keymaps)
   for _, m in ipairs(keymaps) do
     local lhs = m[1]
@@ -51,40 +51,40 @@ function keymap:set(keymaps)
 end
 
 --- Enable noremap option.
---- @return self
+---@return self
 function keymap:noremap()
   self.options.noremap = true
   return self
 end
 --- Enable nowait option.
---- @return self
+---@return self
 function keymap:nowait()
   self.options.nowait = true
   return self
 end
 --- Enable silent option.
---- @return self
+---@return self
 function keymap:silent()
   self.options.silent = true
   return self
 end
 --- Enable script option.
---- @return self
+---@return self
 function keymap:script()
   self.options.script = true
   return self
 end
 --- Enable expr option.
---- @return self
+---@return self
 function keymap:expr()
   self.options.expr = true
   return self
 end
 
 --- Create an instance of keymap
---- @param buffer boolean If true, set keymap for buffer-local
---- @param mode string The mode of keymap, e.g. "n", "i", "v", "x", etc.
---- @return lib.keymap
+---@param buffer boolean If true, set keymap for buffer-local
+---@param mode string The mode of keymap, e.g. "n", "i", "v", "x", etc.
+---@return lib.keymap
 function keymap.new(buffer, mode)
   local self = setmetatable({
     buffer = buffer,

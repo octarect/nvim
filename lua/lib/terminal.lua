@@ -1,20 +1,20 @@
 --- Terminal
---- @class lib.terminal
---- @field private config lib.terminal.Config
---- @field private bunfr number Cache the previously opened terminal buffer number
+---@class lib.terminal
+---@field private config lib.terminal.Config
+---@field private bunfr number Cache the previously opened terminal buffer number
 local terminal = {}
 terminal.__index = terminal
 
---- @alias lib.terminal.CallbackFunc fun(bufnr: number)
+---@alias lib.terminal.CallbackFunc fun(bufnr: number)
 
---- @class lib.terminal.Config
---- @field height_ratio number
---- @field min_height number
---- @field on_create? lib.terminal.CallbackFunc Event handler when terminal is created
+---@class lib.terminal.Config
+---@field height_ratio number
+---@field min_height number
+---@field on_create? lib.terminal.CallbackFunc Event handler when terminal is created
 
 --- Initialize a terminal
---- @param cfg lib.terminal.Config
---- @return lib.terminal
+---@param cfg lib.terminal.Config
+---@return lib.terminal
 function terminal.new(cfg)
   cfg.on_create = cfg.on_create or function() end
   local self = setmetatable({
@@ -25,7 +25,7 @@ function terminal.new(cfg)
 end
 
 --- Open terminal
---- @param direction "vertical"|"horizontal"|nil
+---@param direction "vertical"|"horizontal"|nil
 function terminal:open(direction)
   if direction == "vertical" then
     vim.cmd("vs | vertical resize -5")

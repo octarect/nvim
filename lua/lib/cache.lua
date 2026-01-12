@@ -1,11 +1,11 @@
---- @class lib.cache
---- @field cache_path string
+---@class lib.cache
+---@field cache_path string
 local cache = {}
 cache.__index = cache
 
 --- Initalize a new persistence data.
---- @param key string cache key
---- @return lib.cache
+---@param key string cache key
+---@return lib.cache
 function cache.new(key)
   if not key then
     error("required argument 'key' is missing")
@@ -17,7 +17,7 @@ function cache.new(key)
 end
 
 --- Read the value from the cache
---- @return string|nil
+---@return string|nil
 function cache:read()
   local f = io.open(self.cache_path, "r")
   if not f then
@@ -30,8 +30,8 @@ end
 
 --- Write the value to the cache
 --- true if write was successful, false otherwise
---- @param value string The value to write
---- @return boolean
+---@param value string The value to write
+---@return boolean
 function cache:write(value)
   if not value then
     error("required argument 'value' is missing")

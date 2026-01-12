@@ -24,8 +24,8 @@ return {
       },
     },
     event = { "InsertEnter" },
-    --- @module "blink.cmp"
-    --- @type blink.cmp.Config
+    ---@module "blink.cmp"
+    ---@type blink.cmp.Config
     opts = {
       appearance = {
         nerd_font_variant = "mono",
