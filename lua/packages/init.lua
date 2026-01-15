@@ -34,7 +34,6 @@ local package_definitions = {
   "completion",
   "edit",
   "lsp",
-  "telescope",
   "ui",
   "util",
 }

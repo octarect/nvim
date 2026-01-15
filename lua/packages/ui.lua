@@ -166,23 +166,68 @@ return {
       { "nvim-tree/nvim-web-devicons" },
     },
   },
-  -- Notification
   {
-    "rcarriga/nvim-notify",
-    opts = {
-      fps = 30,
-      icons = {
-        DEBUG = "",
-        ERROR = "😷",
-        INFO = "📢",
-        TRACE = "🚓",
-        WARN = "🔥",
-      },
-      timeout = 3000,
-    },
-    config = function(_, opts)
-      require("notify").setup(opts)
-      vim.notify = require("notify")
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    init = function()
+      local keymap = require("lib.keymap")
+      -- stylua: ignore
+      keymap.nmap():silent():set({
+        { "<Leader>df", function() require("snacks").picker.git_files() end, desc = "List Files (Git)" },
+        { "<Leader>dF", function() require("snacks").picker.files() end, desc = "List Files" },
+        { "<Leader>dg", function() require("snacks").picker.git_grep() end, desc = "Grep (Git)" },
+        { "<Leader>dG", function() require("snacks").picker.grep() end, desc = "Grep" },
+        { "<Leader>db", function() require("snacks").picker.buffers() end, desc = "List Buffers" },
+        {
+          "<Leader>f",
+          -- Open Snacks.picker.Explorer.
+          -- If explorer buffer is already opened in another window, jump to that window.
+          -- If explorer buffer is focused, close it.
+          (function()
+            ---@type snacks.Picker
+            local picker = nil
+
+            return function()
+              if picker == nil or picker.closed then
+                picker = require("snacks").explorer()
+                return
+              end
+
+              if picker:is_focused() then
+                picker:close()
+              else
+                picker:focus()
+              end
+            end
+          end)(),
+          desc = "File Explorer",
+        },
+      })
     end,
+    ---@type snacks.Config
+    opts = {
+      explorer = {},
+      gh = {},
+      image = {},
+      notifier = {
+        timeout = 3000,
+        refresh = 50,
+        icons = {
+          error = "🔥",
+          warn = "😷",
+          info = "📢",
+          debug = "",
+          trace = "🚓",
+        },
+      },
+      picker = {},
+      scroll = {},
+      styles = {
+        notification = {
+          border = config.window.border,
+        },
+      },
+    },
   },
 }
