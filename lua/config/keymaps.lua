@@ -73,3 +73,18 @@ keymap.nmap():silent():noremap():set({
     desc = "Open terminal",
   },
 })
+
+-- Menu
+local menu = require("config.menu")
+keymap.nmap():silent():noremap():set({
+  {
+    "<Leader>dm",
+    function()
+      vim.ui.select(menu.items, {
+        prompt = menu.prompt,
+        format_item = menu.format_item,
+      }, menu.on_choice)
+    end,
+    desc = "Open Menu",
+  },
+})
