@@ -77,5 +77,5 @@ require("lib.colorscheme").setup({
 
     -- Make border of floating window blend into the background
     link("FloatBorder", "Normal")
-  end
+  end,
 })

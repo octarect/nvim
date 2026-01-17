@@ -28,6 +28,28 @@ return {
       "zbirenbaum/copilot.lua",
       "nvim-lua/plenary.nvim",
     },
+    init = function()
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "copilot-*",
+        callback = function()
+          vim.opt_local.relativenumber = false
+          vim.opt_local.number = false
+          vim.opt_local.conceallevel = 0
+        end,
+      })
+    end,
+    ---@module "CopilotChat"
+    ---@type CopilotChat.config.Config
+    opts = {
+      model = "claude-sonnet-4.5",
+      temperature = 0.1,
+      headers = {
+        user = "👤",
+        assistant = "😎",
+        tool = "🔭",
+      },
+      auto_insert_mode = true,
+    },
   },
   {
     "folke/sidekick.nvim",
@@ -36,7 +58,7 @@ return {
       local keymap = require("lib.keymap")
       keymap.nmap():silent():set({
         {
-          "<Leader>as",
+          "<Leader>ai",
           function()
             require("sidekick.cli").toggle({ name = "copilot", focus = true })
           end,
@@ -45,14 +67,23 @@ return {
       })
       keymap.vmap():silent():set({
         {
-          "<Leader>as",
+          "<Leader>ai",
           function()
             require("sidekick.cli").send({ name = "copilot", msg = "{selection}" })
           end,
           desc = "AI Assistant (Copilot)",
         },
+        {
+          "<Leader>am",
+          function()
+            require("sidekick.cli").prompt()
+          end,
+          desc = "Select prompt for AI",
+        },
       })
     end,
+    ---@module "sidekick"
+    ---@class sidekick.Config
     opts = {
       cli = {
         win = {

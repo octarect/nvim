@@ -29,6 +29,7 @@ return {
     { "🤪Icons", function() require("snacks").picker.icons() end, {"emoji"} },
     { "🈺Toggle Demo Mode", function() require("lib.demomode").toggle() end },
     { "🤖💬CopilotChat", "CopilotChatToggle", {"ai"} },
+    { "🤖💬Sidekick", function() require("sidekick.cli").toggle({ focus = true }) end, {"ai"} },
   },
   prompt = "Menu",
   format_item = function(item)
