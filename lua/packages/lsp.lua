@@ -44,9 +44,8 @@ return {
         end
 
         if client:supports_method("textDocument/formatting") then
-          keymap.bnmap():silent():noremap():set({
-            {
-              "<LocalLeader>f",
+          keymap.nmap():buf():set({
+            ["<LocalLeader>f"] = {
               function()
                 vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
               end,
@@ -56,9 +55,8 @@ return {
         end
 
         if client:supports_method("textDocument/rangeFormatting") then
-          keymap.bvmap():silent():noremap():set({
-            {
-              "<LocalLeader>f",
+          keymap.vmap():buf():silent():noremap():set({
+            ["<LocalLeader>f"] = {
               function()
                 vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
                 vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
@@ -140,45 +138,39 @@ return {
     event = { "LspAttach" },
     init = function()
       local keymap = require("lib.keymap")
-      keymap.nmap():silent():noremap():set({
-        {
-          "[d",
-          "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+      keymap.nmap():noremap():set({
+        ["[d"] = {
+          "<Cmd>Lspsaga diagnostic_jump_prev<CR>",
           desc = "Jump to the previous diagnostic",
         },
-        {
-          "]d",
-          "<cmd>Lspsaga diagnostic_jump_next<CR>",
+        ["]d"] = {
+          "<Cmd>Lspsaga diagnostic_jump_next<CR>",
           desc = "Jump to the next diagnostic",
         },
-        {
-          "<LocalLeader>h",
-          "<cmd>Lspsaga hover_doc<CR>",
+
+        ["<LocalLeader>h"] = {
+          "<Cmd>Lspsaga hover_doc<CR>",
           desc = "LSP hover",
         },
-        {
-          "<LocalLeader>d",
-          "<cmd>Lspsaga peek_definition<CR>",
+
+        ["<LocalLeader>d"] = {
+          "<Cmd>Lspsaga peek_definition<CR>",
           desc = "LSP definition",
         },
-        {
-          "<LocalLeader>D",
-          "<cmd>Lspsaga peek_type_definition<CR>",
+        ["<LocalLeader>D"] = {
+          "<Cmd>Lspsaga peek_type_definition<CR>",
           desc = "LSP type_definition",
         },
-        {
-          "<LocalLeader>r",
-          "<cmd>Lspsaga rename<CR>",
+        ["<LocalLeader>r"] = {
+          "<Cmd>Lspsaga rename<CR>",
           desc = "LSP rename",
         },
-        {
-          "<LocalLeader>a",
-          "<cmd>Lspsaga code_action<CR>",
+        ["<LocalLeader>a"] = {
+          "<Cmd>Lspsaga code_action<CR>",
           desc = "LSP code_action",
         },
-        {
-          "<LocalLeader>j",
-          "<cmd>Lspsaga outline<CR>",
+        ["<LocalLeader>j"] = {
+          "<Cmd>Lspsaga outline<CR>",
           desc = "Show outline of the current file",
         },
       })

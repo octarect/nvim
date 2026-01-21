@@ -1,134 +1,138 @@
 --- A helper module for setting keymaps in Neovim.
+
+---@alias lib.keymap.mode ""|"n"|"i"|"v"|"x"|"t" The mode of keymap
+
 ---@class lib.keymap
+---@field buffer boolean If true, set keymap for buffer-local
+---@field mode table<lib.keymap.mode, boolean>
+---@field options vim.api.keyset.keymap
 local keymap = {}
 keymap.__index = keymap
 
-local function set_keymap(buffer, mode, lhs, rhs, options)
-  options = options or {}
-
-  -- vim api option
-  local o = {}
-
-  -- If rhs is function, set it as callback
-  local rhs0 = ""
-  if type(rhs) == "function" then
-    o.callback = rhs
-  else
-    rhs0 = rhs
-  end
-  -- Parse options
-  for k, v in pairs(options) do
-    o[k] = v
-  end
-
-  -- Set keymap
-  if buffer then
-    vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs0, o)
-  else
-    vim.api.nvim_set_keymap(mode, lhs, rhs0, o)
-  end
+--- Constructor of lib.keymap
+---@return lib.keymap
+function keymap.new()
+  return setmetatable({
+    buffer = false,
+    modes = {},
+    options = {},
+  }, keymap)
 end
 
---- Set keymaps
----@param keymaps table A list of keymaps, each keymap is a table with the following structure:
----   { lhs, rhs, [options] }
----   where:
----   - lhs: The left-hand side of the keymap (the key combination to trigger)
----   - rhs: The right-hand side of the keymap (the command or function to execute)
----   - options: Optional table of options for the keymap, such as noremap, silent, etc.
----@return nil
+--- Set buffer-local keymap
+---@return lib.keymap
+function keymap:buf()
+  self.buffer = true
+  return self
+end
+
+--- Set mode
+---@param mode string
+---@return lib.keymap
+function keymap:set_mode(mode)
+  self.modes[mode] = true
+  return self
+end
+
+---@alias lib.keymap.lhs string
+
+---@alias lib.keymap.rhs lib.keymap.rhs_simple|lib.keymap.rhs_table
+
+---@alias lib.keymap.rhs_simple string
+
+---@class lib.keymap.rhs_table
+---@field [1] string|function RHS
+---@field [2] vim.api.keyset.keymap?
+
+---@param keymaps table<lib.keymap.lhs, lib.keymap.rhs>
+---@return lib.keymap
 function keymap:set(keymaps)
-  for _, m in ipairs(keymaps) do
-    local lhs = m[1]
-    local rhs = m[2]
-    m[1] = nil
-    m[2] = nil
+  for lhs, def in pairs(keymaps) do
+    local rhs0 = ""
+    local o = {}
 
-    local options = vim.tbl_deep_extend("force", self.options, m)
+    if type(def) == "string" then
+      rhs0 = def
+    else
+      local rhs = def[1]
+      local o0 = def[2] or {}
 
-    set_keymap(self.buffer, self.mode, lhs, rhs, options)
+      o = vim.tbl_deep_extend("force", self.options, o0)
+
+      -- If rhs is function, set it as callback
+      if type(rhs) == "function" then
+        o.callback = rhs
+      else
+        rhs0 = rhs
+      end
+    end
+
+    for m, _ in pairs(self.modes) do
+      if buffer then
+        vim.api.nvim_buf_set_keymap(0, m, lhs, rhs0, o)
+      else
+        vim.api.nvim_set_keymap(m, lhs, rhs0, o)
+      end
+    end
   end
 end
 
---- Enable noremap option.
----@return self
+---@return lib.keymap
 function keymap:noremap()
   self.options.noremap = true
   return self
 end
---- Enable nowait option.
----@return self
+
+---@return lib.keymap
 function keymap:nowait()
   self.options.nowait = true
   return self
 end
---- Enable silent option.
----@return self
+
+---@return lib.keymap
 function keymap:silent()
   self.options.silent = true
   return self
 end
---- Enable script option.
----@return self
+---@return lib.keymap
 function keymap:script()
   self.options.script = true
   return self
 end
---- Enable expr option.
----@return self
+---@return lib.keymap
 function keymap:expr()
   self.options.expr = true
   return self
 end
 
---- Create an instance of keymap
----@param buffer boolean If true, set keymap for buffer-local
----@param mode string The mode of keymap, e.g. "n", "i", "v", "x", etc.
 ---@return lib.keymap
-function keymap.new(buffer, mode)
-  local self = setmetatable({
-    buffer = buffer,
-    mode = mode,
-    options = {},
-  }, keymap)
-  return self
+function keymap.map()
+  return keymap.new():set_mode("")
 end
 
-function keymap.map()
-  return keymap.new(false, "")
-end
+---@return lib.keymap
 function keymap.nmap()
-  return keymap.new(false, "n")
+  return keymap.new():set_mode("n")
 end
+
+---@return lib.keymap
 function keymap.imap()
-  return keymap.new(false, "i")
+  return keymap.new():set_mode("i")
 end
+
+---@return lib.keymap
 function keymap.vmap()
-  return keymap.new(false, "v")
+  return keymap.new():set_mode("v")
 end
+
+---@return lib.keymap
 function keymap.xmap()
-  return keymap.new(false, "x")
+  return keymap.new():set_mode("x")
 end
+
+---@return lib.keymap
 function keymap.tmap()
-  return keymap.new(false, "t")
-end
-function keymap.bmap()
-  return keymap.new(true, "")
-end
-function keymap.bnmap()
-  return keymap.new(true, "n")
-end
-function keymap.bimap()
-  return keymap.new(true, "i")
-end
-function keymap.bvmap()
-  return keymap.new(true, "v")
-end
-function keymap.bxmap()
-  return keymap.new(true, "x")
-end
-function keymap.btmap()
-  return keymap.new(true, "t")
+  return keymap.new():set_mode("t")
 end
 
 return keymap

@@ -81,10 +81,10 @@ return {
 
       local keymap = require("lib.keymap")
       keymap.nmap():silent():set({
-        { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },
+        ["co"] = { "<Plug>NERDCommenterToggle", desc = "Toggle Comment" },
       })
       keymap.vmap():silent():set({
-        { "co", "<Plug>NERDCommenterToggle", desc = "Toggle comment" },
+        ["co"] = { "<Plug>NERDCommenterToggle", desc = "Toggle Comment" },
       })
     end,
   },
@@ -112,7 +112,7 @@ return {
     init = function()
       local keymap = require("lib.keymap")
       keymap.vmap():noremap():set({
-        { "<CR>", ":EasyAlign<CR>", desc = "Align selection" },
+        ["<CR>"] = { "<Cmd>EasyAlign<CR>", desc = "Align Selection" },
       })
     end,
   },

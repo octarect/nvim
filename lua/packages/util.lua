@@ -10,8 +10,8 @@ return {
         end
       end
       keymap.nmap():silent():set({
-        { "j", accelerated_move("j"), desc = "Move down (accelerated)" },
-        { "k", accelerated_move("k"), desc = "Move up (accelerated)" },
+        ["j"] = { accelerated_move("j"), desc = "Move down (accelerated)" },
+        ["k"] = { accelerated_move("k"), desc = "Move up (accelerated)" },
       })
     end,
   },

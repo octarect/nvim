@@ -56,25 +56,22 @@ return {
     lazy = true,
     init = function()
       local keymap = require("lib.keymap")
-      keymap.nmap():silent():set({
-        {
-          "<Leader>ai",
+      keymap.nmap():set({
+        ["<Leader>ai"] = {
           function()
             require("sidekick.cli").toggle({ name = "copilot", focus = true })
           end,
           desc = "AI Assistant (Copilot)",
         },
       })
-      keymap.vmap():silent():set({
-        {
-          "<Leader>ai",
+      keymap.vmap():set({
+        ["<Leader>ai"] = {
           function()
             require("sidekick.cli").send({ name = "copilot", msg = "{selection}" })
           end,
           desc = "AI Assistant (Copilot)",
         },
-        {
-          "<Leader>am",
+        ["<Leader>am"] = {
           function()
             require("sidekick.cli").prompt()
           end,
