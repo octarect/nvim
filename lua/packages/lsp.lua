@@ -9,6 +9,7 @@ return {
       "mason-org/mason-lspconfig.nvim",
     },
     event = { "LazyFile" },
+    cmd = { "LspInfo" },
     init = function()
       -- Disable logging
       vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
