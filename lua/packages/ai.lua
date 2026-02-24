@@ -89,6 +89,9 @@ return {
             stopinsert = { "<c-j><c-j>", "stopinsert", mode = "t", desc = "enter normal mode" },
           },
         },
+        mux = {
+          enabled = true,
+        },
       },
       nes = {
         enabled = false,
