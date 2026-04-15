@@ -12,7 +12,7 @@ return {
     cmd = { "LspInfo" },
     init = function()
       -- Disable logging
-      vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
+      vim.lsp.log.set_level(vim.lsp.log_levels.OFF)
     end,
     config = function()
       local keymap = require("lib.keymap")
