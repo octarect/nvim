@@ -61,7 +61,7 @@ return {
           function()
             require("sidekick.cli").toggle({ name = "copilot", focus = true })
           end,
-          desc = "AI Assistant (Copilot)",
+          { desc = "AI Assistant (Copilot)" },
         },
       })
       keymap.vmap():set({
@@ -69,13 +69,13 @@ return {
           function()
             require("sidekick.cli").send({ name = "copilot", msg = "{selection}" })
           end,
-          desc = "AI Assistant (Copilot)",
+          { desc = "AI Assistant (Copilot)" },
         },
         ["<Leader>am"] = {
           function()
             require("sidekick.cli").prompt()
           end,
-          desc = "Select prompt for AI",
+          { desc = "Select prompt for AI" },
         },
       })
     end,

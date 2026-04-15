@@ -50,7 +50,7 @@ return {
               function()
                 vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
               end,
-              desc = "LSP Format",
+              { desc = "LSP Format" },
             },
           })
         end
@@ -62,7 +62,7 @@ return {
                 vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
                 vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
               end,
-              desc = "LSP Format (Range)",
+              { desc = "LSP Format (Range)" },
             },
           })
         end
@@ -142,37 +142,37 @@ return {
       keymap.nmap():noremap():set({
         ["[d"] = {
           "<Cmd>Lspsaga diagnostic_jump_prev<CR>",
-          desc = "Jump to the previous diagnostic",
+          { desc = "Jump to the previous diagnostic" },
         },
         ["]d"] = {
           "<Cmd>Lspsaga diagnostic_jump_next<CR>",
-          desc = "Jump to the next diagnostic",
+          { desc = "Jump to the next diagnostic" },
         },
 
         ["<LocalLeader>h"] = {
           "<Cmd>Lspsaga hover_doc<CR>",
-          desc = "LSP hover",
+          { desc = "LSP hover" },
         },
 
         ["<LocalLeader>d"] = {
           "<Cmd>Lspsaga peek_definition<CR>",
-          desc = "LSP definition",
+          { desc = "LSP definition" },
         },
         ["<LocalLeader>D"] = {
           "<Cmd>Lspsaga peek_type_definition<CR>",
-          desc = "LSP type_definition",
+          { desc = "LSP type_definition" },
         },
         ["<LocalLeader>r"] = {
           "<Cmd>Lspsaga rename<CR>",
-          desc = "LSP rename",
+          { desc = "LSP rename" },
         },
         ["<LocalLeader>a"] = {
           "<Cmd>Lspsaga code_action<CR>",
-          desc = "LSP code_action",
+          { desc = "LSP code_action" },
         },
         ["<LocalLeader>j"] = {
           "<Cmd>Lspsaga outline<CR>",
-          desc = "Show outline of the current file",
+          { desc = "Show outline of the current file" },
         },
       })
     end,

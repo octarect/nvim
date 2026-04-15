@@ -174,11 +174,11 @@ return {
       local keymap = require("lib.keymap")
       -- stylua: ignore
       keymap.nmap():set({
-        ["<Leader>df"] = { function() require("snacks").picker.git_files() end, desc = "List Files (Git)" },
-        ["<Leader>dF"] = { function() require("snacks").picker.files() end, desc = "List Files" },
-        ["<Leader>dg"] = { function() require("snacks").picker.git_grep() end, desc = "Grep (Git)" },
-        ["<Leader>dG"] = { function() require("snacks").picker.grep() end, desc = "Grep" },
-        ["<Leader>db"] = { function() require("snacks").picker.buffers() end, desc = "List Buffers" },
+        ["<Leader>df"] = { function() require("snacks").picker.git_files() end, { desc = "List Files (Git)" } },
+        ["<Leader>dF"] = { function() require("snacks").picker.files() end, { desc = "List Files" } },
+        ["<Leader>dg"] = { function() require("snacks").picker.git_grep() end, { desc = "Grep (Git)" } },
+        ["<Leader>dG"] = { function() require("snacks").picker.grep() end, { desc = "Grep" } },
+        ["<Leader>db"] = { function() require("snacks").picker.buffers() end, { desc = "List Buffers" } },
         ["<Leader>f"] = {
           -- Open Snacks.picker.Explorer.
           -- If explorer buffer is already opened in another window, jump to that window.
@@ -200,7 +200,7 @@ return {
               end
             end
           end)(),
-          desc = "File Explorer",
+          { desc = "File Explorer" },
         },
       })
     end,

@@ -10,7 +10,7 @@ keymap.nmap():noremap():set({
       print(hlname)
       print(vim.inspect(require("lib.colorscheme").get_hl(hlname.output)))
     end,
-    desc = "Inspect highlight",
+    { desc = "Inspect highlight" },
   },
 
   -- Tab
@@ -63,6 +63,6 @@ keymap.nmap():set({
         format_item = menu.format_item,
       }, menu.on_choice)
     end,
-    desc = "Open Menu",
+    { desc = "Open Menu" },
   },
 })
