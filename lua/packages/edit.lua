@@ -6,13 +6,21 @@ return {
     dependencies = {
       "nvim-treesitter/nvim-treesitter-context",
     },
-    event = { "LazyFile" },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
-    opts = {
+    lazy = false,
+    init = function()
+      -- Check if tree-sitter-cli is installed
+      if vim.fn.executable("tree-sitter") ~= 1 then
+        vim.api.nvim_create_autocmd("VimEnter", {
+          once = true,
+          callback = function(_)
+            vim.notify("[[nvim-treesitter]] tree-sitter-cli is not found. Please install it.", vim.log.levels.WARN)
+          end,
+        })
+        return
+      end
+
       -- Install parsers automatically
-      ensure_installed = {
+      local ensure_installed = {
         "bash",
         "c",
         "c_sharp",
@@ -55,7 +63,14 @@ return {
         "vimdoc",
         "xml",
         "yaml",
-      },
+      }
+      local already_installed = require("nvim-treesitter.config").get_installed()
+      local not_installed = vim.iter(ensure_installed):filter(function(parser)
+        return not vim.tbl_contains(already_installed, parser)
+      end):totable()
+      require("nvim-treesitter").install(not_installed)
+    end,
+    opts = {
       highlight = {
         enable = true,
         disable = {},
