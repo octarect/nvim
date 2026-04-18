@@ -1,11 +1,25 @@
 local config = require("config.vars")
+local ensure_installed = {
+  "bashls",
+  "denols",
+  "dockerls",
+  "gopls",
+  "html",
+  "jsonls",
+  "lua_ls",
+  "terraformls",
+  "tflint",
+  "ts_ls",
+  "vimls",
+  "yamlls",
+}
 
 return {
   -- LSP
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "mason-org/mason.nvim",
+      { "mason-org/mason.nvim", opts = {} },
       "mason-org/mason-lspconfig.nvim",
     },
     event = { "LazyFile" },
@@ -16,6 +30,11 @@ return {
     end,
     config = function()
       local keymap = require("lib.keymap")
+
+      require("mason-lspconfig").setup({
+        ensure_installed = ensure_installed,
+      })
+      vim.lsp.enable(require("mason-lspconfig").get_installed_servers())
 
       -- Event handler when LSP attaches to a buffer
       local on_attach = function(client, bufnr)
@@ -92,32 +111,6 @@ return {
         end,
       })
     end,
-  },
-  {
-    "mason-org/mason-lspconfig.nvim",
-    dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
-    },
-    config = function(_, opts)
-      require("mason-lspconfig").setup(opts)
-      vim.lsp.enable(require("mason-lspconfig").get_installed_servers())
-    end,
-    opts = {
-      ensure_installed = {
-        "bashls",
-        "denols",
-        "dockerls",
-        "gopls",
-        "html",
-        "jsonls",
-        "lua_ls",
-        "terraformls",
-        "tflint",
-        "ts_ls",
-        "vimls",
-        "yamlls",
-      },
-    },
   },
   {
     "onsails/lspkind-nvim",
