@@ -220,7 +220,13 @@ return {
           trace = "🚓",
         },
       },
-      picker = {},
+      picker = {
+        sources = {
+          explorer = {
+            hidden = true,
+          },
+        },
+      },
       scroll = {},
       styles = {
         notification = {
