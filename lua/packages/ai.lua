@@ -55,25 +55,39 @@ return {
     "folke/sidekick.nvim",
     lazy = true,
     init = function()
+      _G.sidekick_tool_name = (function()
+        local default_tool_name = "copilot"
+
+        return function()
+          local state = require("sidekick.cli.state").get({ started = true })[1]
+
+          if state and state.tool.name then
+            return state.tool.name
+          else
+            return default_tool_name
+          end
+        end
+      end)()
+
       local keymap = require("lib.keymap")
       keymap.nmap():set({
         ["<Leader>ai"] = {
           function()
-            require("sidekick.cli").toggle({ name = "copilot", focus = true })
+            require("sidekick.cli").toggle({ name = _G.sidekick_tool_name(), focus = true })
           end,
-          { desc = "AI Assistant (Copilot)" },
+          { desc = "AI Assistant" },
         },
       })
       keymap.vmap():set({
         ["<Leader>ai"] = {
           function()
-            require("sidekick.cli").send({ name = "copilot", msg = "{selection}" })
+            require("sidekick.cli").send({ name = _G.sidekick_tool_name(), msg = "{selection}" })
           end,
-          { desc = "AI Assistant (Copilot)" },
+          { desc = "AI Assistant" },
         },
         ["<Leader>am"] = {
           function()
-            require("sidekick.cli").prompt()
+            require("sidekick.cli").prompt({ name = _G.sidekick_tool_name() })
           end,
           { desc = "Select prompt for AI" },
         },
