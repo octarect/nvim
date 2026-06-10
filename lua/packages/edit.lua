@@ -126,8 +126,8 @@ return {
     cmd = "EasyAlign",
     init = function()
       local keymap = require("lib.keymap")
-      keymap.vmap():noremap():set({
-        ["<CR>"] = { "<Cmd>EasyAlign<CR>", desc = "Align Selection" },
+      keymap.vmap():set({
+        ["<CR>"] = { ":EasyAlign<CR>", desc = "Align Selection" },
       })
     end,
   },
